@@ -21,32 +21,6 @@ function CustomRenderer(eventBus, styles) {
 
   var computeStyle = styles.computeStyle;
 
-  this.drawTriangle = function(p, side) {
-    var halfSide = side / 2,
-        points,
-        attrs;
-
-    points = [ halfSide, 0, side, side, 0, side ];
-
-    attrs = computeStyle(attrs, {
-      stroke: '#3CAA82',
-      strokeWidth: 2,
-      fill: '#3CAA82'
-    });
-
-    var polygon = svgCreate('polygon');
-
-    svgAttr(polygon, {
-      points: points
-    });
-
-    svgAttr(polygon, attrs);
-
-    svgAppend(p, polygon);
-
-    return polygon;
-  };
-
   this.getTrianglePath = function(element) {
     var x = element.x,
         y = element.y,
@@ -146,11 +120,11 @@ CustomRenderer.prototype.canRender = function(element) {
 CustomRenderer.prototype.drawShape = function(p, element) {
   var type = element.type;
 
-  if (type === 'custom:triangle') {
-    return this.drawTriangle(p, element.width);
+  if (type === 'custom:stop') {
+    return this.drawCircle(p, element.width, element.height);
   }
 
-  if (type === 'custom:circle') {
+  if (type === 'custom:fail') {
     return this.drawCircle(p, element.width, element.height);
   }
 };
@@ -158,11 +132,11 @@ CustomRenderer.prototype.drawShape = function(p, element) {
 CustomRenderer.prototype.getShapePath = function(shape) {
   var type = shape.type;
 
-  if (type === 'custom:triangle') {
-    return this.getTrianglePath(shape);
+  if (type === 'custom:fail') {
+    return this.getCirclePath(shape);
   }
 
-  if (type === 'custom:circle') {
+  if (type === 'custom:stop') {
     return this.getCirclePath(shape);
   }
 };

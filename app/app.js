@@ -3,10 +3,6 @@
 // inlined diagram; load it from somewhere else if you like
 var pizzaDiagram = require('../resources/pizza-collaboration.bpmn');
 
-// custom elements JSON; load it from somewhere else if you like
-var customElements = require('./custom-elements.json');
-
-
 // our custom modeler
 var CustomModeler = require('./custom-modeler');
 
@@ -20,8 +16,6 @@ modeler.importXML(pizzaDiagram, function(err) {
   }
 
   modeler.get('canvas').zoom('fit-viewport');
-
-  modeler.addCustomElements(customElements);
 });
 
 

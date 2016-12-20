@@ -59,12 +59,6 @@ PaletteProvider.prototype.getPaletteEntries = function(element) {
   }
 
   assign(actions, {
-    'custom-triangle': createAction(
-      'custom:triangle', 'custom', 'icon-custom-triangle'
-    ),
-    'custom-circle': createAction(
-      'custom:circle', 'custom', 'icon-custom-circle'
-    ),
     'custom-separator': {
       group: 'custom',
       separator: true
@@ -93,6 +87,12 @@ PaletteProvider.prototype.getPaletteEntries = function(element) {
       group: 'tools',
       separator: true
     },
+    'custom-stop': createAction(
+      'custom:stop', 'custom', 'icon-custom-stop'
+    ),
+    'custom-fail': createAction(
+      'custom:fail', 'custom', 'icon-custom-fail'
+    ),
     'create.start-event': createAction(
       'bpmn:StartEvent', 'event', 'bpmn-icon-start-event-none'
     ),
