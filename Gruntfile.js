@@ -96,8 +96,14 @@ module.exports = function(grunt) {
             dest: '<%= config.dist %>'
           }
         ]
+      },
+      styles: {
+        files: {
+          'dist/css/app.css': 'styles/app.less'
+        }
       }
     },
+    
     watch: {
       options: {
         livereload: true
