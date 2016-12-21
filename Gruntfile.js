@@ -96,13 +96,22 @@ module.exports = function(grunt) {
             dest: '<%= config.dist %>'
           }
         ]
+      }
+  },
+  less: {
+      options: {
+        dumpLineNumbers: 'comments',
+        paths: [
+          'node_modules'
+        ]
       },
-      styles: {
+    styles: {
         files: {
           'dist/css/app.css': 'styles/app.less'
         }
-      }
-    },
+    }
+  },
+    
     
     watch: {
       options: {
@@ -113,6 +122,16 @@ module.exports = function(grunt) {
         files: [ '<%= config.sources %>/**/*.*' ],
         tasks: [ 'copy:app' ]
       },
+      
+      less: {
+        files: [
+          'styles/**/*.less',
+          'node_modules/bpmn-js-properties-panel/styles/**/*.less'
+        ],
+        tasks: [
+          'less'
+        ]
+      }
     },
 
     connect: {
@@ -146,10 +165,11 @@ module.exports = function(grunt) {
 
   // tasks
 
-  grunt.registerTask('build', [ 'copy', 'browserify:app' ]);
+  grunt.registerTask('build', [ 'copy','less', 'browserify:app' ]);
 
   grunt.registerTask('auto-build', [
     'copy',
+    'less',
     'browserify:watch',
     'connect:livereload',
     'watch'
@@ -161,3 +181,6 @@ module.exports = function(grunt) {
 
   grunt.registerTask('default', [ 'jshint', 'test', 'build' ]);
 };
+
+
+
