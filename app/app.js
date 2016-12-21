@@ -1,14 +1,13 @@
 'use strict';
 
-var pizzaDiagram = require('../resources/job.bpmn');
+var jobDiagram = require('../resources/job.bpmn');
 
 var CustomModeler = require('./custom-modeler');
 var $ = require('jquery');
 
 var propertiesPanelModule = require('bpmn-js-properties-panel'),
-    // providing camunda executable properties, too
-    propertiesProviderModule = require('bpmn-js-properties-panel/lib/provider/camunda'),
-    camundaModdleDescriptor = require('camunda-bpmn-moddle/resources/camunda');
+    propertiesProviderModule = require('./custom-property'),
+    stepModdleDescriptor = require('./descriptors/step');
 
 
 var modeler = new CustomModeler({ 
@@ -21,13 +20,12 @@ var modeler = new CustomModeler({
         propertiesPanelModule,
         propertiesProviderModule
     ],
-  // needed if you'd like to maintain camunda:XXX properties in the properties panel
   moddleExtensions: {
-    camunda: camundaModdleDescriptor
+    step: stepModdleDescriptor
   }
 });
 
-modeler.importXML(pizzaDiagram, function(err) {
+modeler.importXML(jobDiagram, function(err) {
 
   if (err) {
     console.error('something went wrong:', err);
