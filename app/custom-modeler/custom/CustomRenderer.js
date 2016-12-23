@@ -146,11 +146,11 @@ CustomRenderer.prototype.canRender = function(element) {
 CustomRenderer.prototype.drawShape = function(p, element) {
   var type = element.type;
 
-  if (type === 'custom:triangle') {
-    return this.drawTriangle(p, element.width);
+  if (type === 'custom:fail') {
+    return this.drawCircle(p, element.width, element.height);
   }
 
-  if (type === 'custom:circle') {
+  if (type === 'custom:stop') {
     return this.drawCircle(p, element.width, element.height);
   }
 };

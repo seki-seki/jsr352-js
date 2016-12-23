@@ -59,11 +59,11 @@ PaletteProvider.prototype.getPaletteEntries = function(element) {
   }
 
   assign(actions, {
-    'custom-triangle': createAction(
-      'custom:triangle', 'custom', 'icon-custom-triangle'
+    'custom-fail': createAction(
+      'custom:fail', 'custom', 'icon-custom-fail'
     ),
-    'custom-circle': createAction(
-      'custom:circle', 'custom', 'icon-custom-circle'
+    'custom-stop': createAction(
+      'custom:stop', 'custom', 'icon-custom-stop'
     ),
     'custom-separator': {
       group: 'custom',

@@ -26,7 +26,7 @@ function CustomContextPadProvider(eventBus, contextPad, modeling, elementFactory
       connect.start(event, element, autoActivate);
     }
 
-    if (isAny(businessObject, [ 'custom:triangle', 'custom:circle'])) {
+    if (isAny(businessObject, [ 'custom:fail', 'custom:stop'])) {
       assign(actions, {
         'connect': {
           group: 'connect',
