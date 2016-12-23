@@ -60,7 +60,7 @@ function createCustomTabGroups(element, elementRegistry) {
   var StepGroup = {
     id: 'Step',
     label: 'Step',
-    entries: [BatchletOrChunkProps(StepGroup, element)]
+    entries: []
   };
 
   BatchletOrChunkProps(StepGroup, element);

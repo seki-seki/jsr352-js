@@ -9,7 +9,7 @@ module.exports = function(group, element) {
   // Only return an entry, if the currently selected
   // element is a start event.
 
-  if (is(element, 'bpmn:task')) {
+  if (is(element, 'bpmn:Task')) {
     group.entries.push(entryFactory.textField({
       id : 'spell',
       description : 'Apply a black magic spell',

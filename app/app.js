@@ -10,7 +10,7 @@ var propertiesPanelModule = require('bpmn-js-properties-panel'),
     stepModdleDescriptor = require('./descriptors/step');
 
 
-var modeler = new CustomModeler({ 
+var modeler = new CustomModeler({
     container: '#canvas',
     keyboard: { bindTo: document },
     propertiesPanel: {
