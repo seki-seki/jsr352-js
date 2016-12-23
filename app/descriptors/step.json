@@ -1,0 +1,24 @@
+{
+  "name": "step",
+  "prefix": "step",
+  "uri": "http://step",
+  "xml": {
+    "tagAlias": "lowerCase"
+  },
+  "associations": [],
+  "types": [
+    {
+      "name": "aaa",
+      "extends": [
+        "bpmn:Task"
+      ],
+      "properties": [
+        {
+          "name": "spell",
+          "isAttr": true,
+          "type": "String"
+        }
+      ]
+    }
+  ]
+}
