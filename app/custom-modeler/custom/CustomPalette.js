@@ -59,16 +59,16 @@ PaletteProvider.prototype.getPaletteEntries = function(element) {
   }
 
   assign(actions, {
-    'custom-fail': createAction(
-      'custom:fail', 'custom', 'icon-custom-fail'
-    ),
-    'custom-stop': createAction(
-      'custom:stop', 'custom', 'icon-custom-stop'
-    ),
-    'custom-separator': {
-      group: 'custom',
-      separator: true
-    },
+//    'custom-fail': createAction(
+//      'custom:fail', 'custom', 'icon-custom-fail'
+//    ),
+//    'custom-stop': createAction(
+//      'custom:stop', 'custom', 'icon-custom-stop'
+//    ),
+//    'custom-separator': {
+//      group: 'custom',
+//      separator: true
+//    },
     'lasso-tool': {
       group: 'tools',
       className: 'bpmn-icon-lasso-tool',
@@ -96,14 +96,8 @@ PaletteProvider.prototype.getPaletteEntries = function(element) {
     'create.start-event': createAction(
       'bpmn:StartEvent', 'event', 'bpmn-icon-start-event-none'
     ),
-    'create.intermediate-event': createAction(
-      'bpmn:IntermediateThrowEvent', 'event', 'bpmn-icon-intermediate-event-none'
-    ),
     'create.end-event': createAction(
       'bpmn:EndEvent', 'event', 'bpmn-icon-end-event-none'
-    ),
-    'create.exclusive-gateway': createAction(
-      'bpmn:ExclusiveGateway', 'gateway', 'bpmn-icon-gateway-xor'
     ),
     'create.task': createAction(
       'bpmn:Task', 'activity', 'bpmn-icon-task'

@@ -1,20 +1,25 @@
 {
-  "name": "step",
-  "prefix": "step",
-  "uri": "http://step",
+  "name": "jsr352",
+  "prefix": "jsr352",
+  "uri": "http://jsr352",
   "xml": {
     "tagAlias": "lowerCase"
   },
   "associations": [],
   "types": [
     {
-      "name": "aaa",
+      "name": "Compornent",
       "extends": [
         "bpmn:Task"
       ],
       "properties": [
         {
-          "name": "spell",
+          "name": "batchletOrChunk",
+          "isAttr": true,
+          "type": "String"
+        },
+        {
+          "name": "batchletCompornent",
           "isAttr": true,
           "type": "String"
         }

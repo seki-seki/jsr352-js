@@ -2,6 +2,7 @@
 
 
 var inherits = require('inherits');
+var is = require('bpmn-js/lib/util/ModelUtil').is;
 
 var PropertiesActivator = require('bpmn-js-properties-panel/lib/PropertiesActivator');
 
@@ -12,11 +13,13 @@ var processProps = require('bpmn-js-properties-panel/lib/provider/bpmn/parts/Pro
     linkProps = require('bpmn-js-properties-panel/lib/provider/bpmn/parts/LinkProps'),
     documentationProps = require('bpmn-js-properties-panel/lib/provider/bpmn/parts/DocumentationProps'),
     idProps = require('bpmn-js-properties-panel/lib/provider/bpmn/parts/IdProps'),
+    properties = require('bpmn-js-properties-panel/lib/provider/camunda/parts/PropertiesProps'),
     nameProps = require('bpmn-js-properties-panel/lib/provider/bpmn/parts/NameProps');
 
 
 // Require your custom property entries.
-var BatchletOrChunkProps = require('./parts/BatchletOrChunkProps');
+var batchletOrChunkProps = require('./parts/BatchletOrChunkProps'),
+    batchletProps = require('./parts/BatchletProps');
 
 // The general tab contains all bpmn relevant properties.
 // The properties are organized in groups.
@@ -29,7 +32,6 @@ function createGeneralTabGroups(element, bpmnFactory, elementRegistry) {
   };
   idProps(generalGroup, element, elementRegistry);
   nameProps(generalGroup, element);
-  processProps(generalGroup, element);
 
   var detailsGroup = {
     id: 'details',
@@ -54,6 +56,23 @@ function createGeneralTabGroups(element, bpmnFactory, elementRegistry) {
   ];
 }
 
+function createExtensionElementsGroups(element, bpmnFactory, elementRegistry) {
+
+  var propertiesGroup = {
+    id : 'extensionElements-properties',
+    label: 'Properties',
+    entries: [],
+    enabled: function(element) {
+        return is(element, 'bpmn:Task') || is(element, 'bpmn:Participant');
+      }
+  };
+  properties(propertiesGroup, element, bpmnFactory);
+
+  return [
+    propertiesGroup
+  ];
+}
+
 // Create the custom Custom tab
 function createCustomTabGroups(element, elementRegistry) {
 
@@ -63,7 +82,9 @@ function createCustomTabGroups(element, elementRegistry) {
     entries: []
   };
 
-  BatchletOrChunkProps(StepGroup, element);
+  batchletOrChunkProps(StepGroup, element);
+  batchletProps(StepGroup, element);
+
 
   return [
     StepGroup
@@ -88,11 +109,17 @@ function CustomPropertiesProvider(eventBus, bpmnFactory, elementRegistry) {
       label: 'Custom',
       groups: createCustomTabGroups(element, elementRegistry)
     };
+    var extensionsTab = {
+      id: 'PropertyElements',
+      label: 'Properties',
+      groups: createExtensionElementsGroups(element, bpmnFactory, elementRegistry)
+    };
 
     // Show general + "Custom" tab
     return [
       generalTab,
-      StepTab
+      StepTab,
+      extensionsTab
     ];
   };
 }

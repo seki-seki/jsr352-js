@@ -7,7 +7,8 @@ var $ = require('jquery');
 
 var propertiesPanelModule = require('bpmn-js-properties-panel'),
     propertiesProviderModule = require('./custom-property'),
-    stepModdleDescriptor = require('./descriptors/step');
+    camundaModdleDescriptor = require('camunda-bpmn-moddle/resources/camunda'),
+    jsr352ModdleDescriptor = require('./descriptors/jsr352');
 
 
 var modeler = new CustomModeler({
@@ -21,7 +22,8 @@ var modeler = new CustomModeler({
         propertiesProviderModule
     ],
   moddleExtensions: {
-    step: stepModdleDescriptor
+    jsr352: jsr352ModdleDescriptor,
+    camunda: camundaModdleDescriptor
   }
 });
 

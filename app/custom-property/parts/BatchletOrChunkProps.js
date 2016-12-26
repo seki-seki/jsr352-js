@@ -6,15 +6,13 @@ var is = require('bpmn-js/lib/util/ModelUtil').is;
 
 module.exports = function(group, element) {
 
-  // Only return an entry, if the currently selected
-  // element is a start event.
-
   if (is(element, 'bpmn:Task')) {
-    group.entries.push(entryFactory.textField({
-      id : 'spell',
-      description : 'Apply a black magic spell',
-      label : 'Spell',
-      modelProperty : 'spell'
+    group.entries.push(entryFactory.selectBox({
+      id : 'batchlet or chunk',
+      description : 'Select batchlet or chunk',
+      label : 'batchlet or chunk',
+      modelProperty : 'batchletOrChunk',
+      selectOptions : [ {name: '', value: ''},{ name: 'batchlet', value: 'batchlet' }, { name: 'chunk', value: 'chunk' }]
     }));
   }
 };
