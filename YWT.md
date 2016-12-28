@@ -18,8 +18,12 @@
 - jsr352.json custom-propertyの編集をexportされるxmlに反映させるために使用する
 
 ##試してわかったこと
-CustomElementとCustomPropertyを同時に使おうとするとエラーが起きる
+- CustomElementとCustomPropertyを同時に使おうとするとエラーが起きる
+
 CustomElementFactoryにてElement生成時に該当jobにbusinessObjectなるプロパティが設定されていないため、エラーが起きることはわかったが、なぜ設定されないのかについては未検証
+
+##次やること
+jsr352に基づいたすべてのプロパティを設定し、アウトプットされるxmlのフォーマットを確定させる（関）
 
 # bpmn diagram, svg の抽出
 
