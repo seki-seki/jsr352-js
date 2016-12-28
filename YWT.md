@@ -20,3 +20,14 @@
 ##試してわかったこと
 CustomElementとCustomPropertyを同時に使おうとするとエラーが起きる
 CustomElementFactoryにてElement生成時に該当jobにbusinessObjectなるプロパティが設定されていないため、エラーが起きることはわかったが、なぜ設定されないのかについては未検証
+
+# bpmn diagram, svg の抽出
+
+Server Post用のbpmn diagramと、job detail画面で表示する用のsvgの取得方法。
+
+## Y
+
+両者を提供するmethodを特定し、jobstreamer consoleへの埋め込み方を検討する。 223kazuki
+
+## W
+## T
