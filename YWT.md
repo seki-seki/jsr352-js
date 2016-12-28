@@ -98,3 +98,4 @@ function saveJob(modeler) {
 
 ## T
 
+上記の想定で job 詳細画面、編集画面のサンプルを実装する。
