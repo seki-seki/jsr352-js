@@ -19,7 +19,7 @@
           "type": "String"
         },
         {
-          "name": "batchletCompornent",
+          "name": "batchletRef",
           "isAttr": true,
           "type": "String"
         }

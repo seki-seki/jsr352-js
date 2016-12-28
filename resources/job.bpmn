@@ -17,7 +17,7 @@
     <bpmn2:subProcess id="SubProcess_1hbwvp6" name="flow">
       <bpmn2:incoming>SequenceFlow_0iqmh2g</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_04dkv0h</bpmn2:outgoing>
-      <bpmn2:task id="Task_0ag0l3z" name="step2" jsr352:batchletOrChunk="batchlet">
+      <bpmn2:task id="Task_0ag0l3z" name="step2" jsr352:batchletOrChunk="batchlet" jsr352:batchleRef="org.jobstreamer.batch.ShellBatchlet">
         <bpmn2:extensionElements>
           <camunda:properties>
             <camunda:property name="key" value="val" />

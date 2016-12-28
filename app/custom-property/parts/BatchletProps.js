@@ -11,8 +11,8 @@ module.exports = function(group, element) {
       id : 'batchlet compornent',
       description : 'batchlet compornent ref',
       label : 'batchlet compornent ref',
-      modelProperty : 'batchletCompornent',
-      selectOptions : [ {name: 'TODO: Make it can get component through XRH', value: 'TODO: Make it can get component through XRH'}]
+      modelProperty : 'batchletRef',
+      selectOptions : [ {name: '', value: ''},{name: 'TODO: Make it can get component through XRH', value: 'TODO: Make it can get component through XRH'}]
     }));
   }
 };
