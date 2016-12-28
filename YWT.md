@@ -19,4 +19,5 @@
 
 ##試してわかったこと
 - CustomElementとCustomPropertyを同時に使おうとするとエラーが起きる
+
 CustomElementFactoryにてElement生成時に該当jobにbusinessObjectなるプロパティが設定されていないため、エラーが起きることはわかったが、なぜ設定されないのかについては未検証
