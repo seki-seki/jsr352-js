@@ -21,3 +21,6 @@
 - CustomElementとCustomPropertyを同時に使おうとするとエラーが起きる
 
 CustomElementFactoryにてElement生成時に該当jobにbusinessObjectなるプロパティが設定されていないため、エラーが起きることはわかったが、なぜ設定されないのかについては未検証
+
+##次やること
+jsr352に基づいたすべてのプロパティを設定し、アウトプットされるxmlのフォーマットを確定させる（関）
