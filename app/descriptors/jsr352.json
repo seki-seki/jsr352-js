@@ -24,6 +24,19 @@
           "type": "String"
         }
       ]
+    },
+    {
+      "name": "Job",
+      "extends": [
+        "bpmn:Participant"
+      ],
+      "properties": [
+        {
+          "name": "restartable",
+          "isAttr": true,
+          "type": "Boolean"
+        }
+      ]
     }
   ]
 }
