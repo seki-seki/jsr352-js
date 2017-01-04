@@ -1,9 +1,9 @@
 'use strict';
 
 var entryFactory = require('bpmn-js-properties-panel/lib/factory/EntryFactory');
-
+var componentProvider = require('../../util/ComponentProvider');
 module.exports = function(group, element) {
-  
+  componentProvider.getBatchlets();
   if (element.businessObject.batchletOrChunk === "batchlet") {
     group.entries.push(entryFactory.selectBox({
       id : 'batchlet compornent',

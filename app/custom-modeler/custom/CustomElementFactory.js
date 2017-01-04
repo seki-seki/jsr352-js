@@ -6,7 +6,6 @@ var assign = require('lodash/object/assign'),
 var BpmnElementFactory = require('bpmn-js/lib/features/modeling/ElementFactory'),
     LabelUtil = require('bpmn-js/lib/util/LabelUtil');
 
-
 /**
  * A custom factory that knows how to create BPMN _and_ custom elements.
  */

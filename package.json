@@ -5,7 +5,7 @@
   "main": "app/app.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/bpmn-io/bpmn-js-examples"
+    "url": "git+https://github.com/bpmn-io/bpmn-js-examples.git"
   },
   "scripts": {
     "test": "grunt test",
@@ -15,19 +15,10 @@
   "keywords": [
     "bpmnjs-example"
   ],
-  "author": {
-    "name": "Ricardo Matias",
-    "url": "https://github.com/ricardomatias"
-  },
+  "author": "Ricardo Matias (https://github.com/ricardomatias)",
   "contributors": [
-    {
-      "name": "bpmn.io contributors",
-      "url": "https://github.com/bpmn-io"
-    },
-    {
-      "name": "Philipp Fromme",
-      "url": "https://github.com/philippfromme"
-    }
+    "bpmn.io contributors (https://github.com/bpmn-io)",
+    "Philipp Fromme (https://github.com/philippfromme)"
   ],
   "license": "MIT",
   "devDependencies": {
@@ -69,6 +60,14 @@
     "lodash": "^3.10.1",
     "jquery": "^2.1.1",
     "tiny-svg": "^0.1.0",
-    "jsedn" : "^0.4.0"
+    "jsedn": "^0.4.0"
+  },
+  "bugs": {
+    "url": "https://github.com/bpmn-io/bpmn-js-examples/issues"
+  },
+  "homepage": "https://github.com/bpmn-io/bpmn-js-examples#readme",
+  "directories": {
+    "doc": "docs",
+    "test": "test"
   }
 }
