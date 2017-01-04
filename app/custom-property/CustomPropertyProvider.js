@@ -20,7 +20,9 @@ var processProps = require('bpmn-js-properties-panel/lib/provider/bpmn/parts/Pro
 // Require your custom property entries.
 var jobProps = require('./parts/JobProps'),
         batchletOrChunkProps = require('./parts/BatchletOrChunkProps'),
-        batchletProps = require('./parts/BatchletProps');
+        batchletProps = require('./parts/BatchletProps'),
+        chunkProps =  require('./parts/ChunkProps'),
+        transitionProps =  require('./parts/transitionProps');
 
 // The general tab contains all bpmn relevant properties.
 // The properties are organized in groups.
@@ -74,14 +76,31 @@ function createExtensionElementsGroups(element, bpmnFactory, elementRegistry) {
     ];
 }
 
+function createTransitionTabGroups(element,bpmnFactory, elementRegistry) {
+    var transitionGroup = {
+        id: 'extensionElements-properties',
+        label: 'Transitions',
+        entries: [],
+        enabled: function (element) {
+            return is(element, 'bpmn:Subprocess') || is(element, 'bpmn:Task');
+        }
+    };
+    transitionProps(transitionGroup, element, bpmnFactory);
+
+    return [
+        transitionGroup
+    ];
+}
+
 // Create the custom Custom tab
 function createJobTabGroups(element, elementRegistry) {
 
     var JobGroup = {
         id: 'Job',
-        lable: 'Job',
+        label: 'Job',
         entries: []
     };
+    
     jobProps(JobGroup, element);
 
     return [
@@ -99,6 +118,8 @@ function createStepTabGroups(element, elementRegistry) {
 
     batchletOrChunkProps(StepGroup, element);
     batchletProps(StepGroup, element);
+    chunkProps(StepGroup, element);
+    
 
 
     return [
@@ -131,13 +152,20 @@ function CustomPropertiesProvider(eventBus, bpmnFactory, elementRegistry) {
             label: 'Properties',
             groups: createExtensionElementsGroups(element, bpmnFactory, elementRegistry)
         };
+        
+        var transitionTab = {
+            id: 'TransitionElements',
+            label: 'Transitions',
+            groups: createTransitionTabGroups(element, bpmnFactory, elementRegistry)
+        };
 
         // Show general + "Custom" tab
         return [
             generalTab,
             stepTab,
             jobTab,
-            extensionsTab
+            extensionsTab,
+            transitionTab
         ];
     };
 }

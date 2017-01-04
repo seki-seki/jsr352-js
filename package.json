@@ -60,7 +60,6 @@
     "lodash": "^3.10.1",
     "jquery": "^2.1.1",
     "tiny-svg": "^0.1.0",
-    "jsedn": "^0.4.0",
     "edn":"https://github.com/josh/js-edn.git"
   },
   "bugs": {

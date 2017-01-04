@@ -8,9 +8,8 @@ module.exports = function(group, element) {
    if (is(element, 'bpmn:Participant')) {
     group.entries.push(entryFactory.checkbox({
       id : 'restartable',
-      description : 'restartable',
       label : 'is this job restartable?',
-      modelProperty : 'restartable',
+      modelProperty : 'restartable'
     }));
   }
 };

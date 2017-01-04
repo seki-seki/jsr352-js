@@ -6,21 +6,27 @@ var controlBusURL = document.querySelector("meta[name=control-bus-url]").getAttr
 var appName = "default";
 var xhr = new XMLHttpRequest();
 xhr.withCredentials = true;
-var map;
+var componentJSON;
 xhr.addEventListener("load", function (ev) {
-    map = edn.parse(xhr.responseText);
+    componentJSON = edn.valueOf(edn.parse(xhr.responseText));
 });
 xhr.open("GET", controlBusURL + "/" + appName + "/batch-components");
 xhr.send();
-console.log(map);
 
 function ComponentProvider() {
-
 }
 
 ComponentProvider.getBatchlets = function () {
-    console.log(map);
-    return appName;
+    return componentJSON["batch-component/batchlet"];
+};
+ComponentProvider.getItemReaders = function () {
+    return componentJSON["batch-component/item-reader"];
+};
+ComponentProvider.getItemProcessors = function () {
+    return componentJSON["batch-component/item-processor"];
+};
+ComponentProvider.getItemWriters = function () {
+    return componentJSON["batch-component/item-writer"];
 };
 
 module.exports = ComponentProvider;
