@@ -20,7 +20,8 @@ var processProps = require('bpmn-js-properties-panel/lib/provider/bpmn/parts/Pro
 // Require your custom property entries.
 var jobProps = require('./parts/JobProps'),
         batchletOrChunkProps = require('./parts/BatchletOrChunkProps'),
-        batchletProps = require('./parts/BatchletProps');
+        batchletProps = require('./parts/BatchletProps'),
+        chunkProps =  require('./parts/ChunkProps');
 
 // The general tab contains all bpmn relevant properties.
 // The properties are organized in groups.
@@ -79,9 +80,10 @@ function createJobTabGroups(element, elementRegistry) {
 
     var JobGroup = {
         id: 'Job',
-        lable: 'Job',
+        label: 'Job',
         entries: []
     };
+    
     jobProps(JobGroup, element);
 
     return [
@@ -99,6 +101,8 @@ function createStepTabGroups(element, elementRegistry) {
 
     batchletOrChunkProps(StepGroup, element);
     batchletProps(StepGroup, element);
+    chunkProps(StepGroup, element);
+    
 
 
     return [

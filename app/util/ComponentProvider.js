@@ -18,14 +18,14 @@ function ComponentProvider() {
 ComponentProvider.getBatchlets = function () {
     return componentJSON["batch-component/batchlet"];
 };
-ComponentProvider.getItemWriters = function () {
-    return componentJSON["batch-component/item-writer"];
-};
 ComponentProvider.getItemReaders = function () {
     return componentJSON["batch-component/item-reader"];
 };
 ComponentProvider.getItemProcessors = function () {
-    return componentJSON["batch-component/item-processors"];
+    return componentJSON["batch-component/item-processor"];
+};
+ComponentProvider.getItemWriters = function () {
+    return componentJSON["batch-component/item-writer"];
 };
 
 module.exports = ComponentProvider;
