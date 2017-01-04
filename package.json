@@ -60,8 +60,7 @@
     "lodash": "^3.10.1",
     "jquery": "^2.1.1",
     "tiny-svg": "^0.1.0",
-    "jsedn": "^0.4.0",
-    "edn":"git://github.com/josh/js-edn.git"
+    "edn":"https://github.com/josh/js-edn.git"
   },
   "bugs": {
     "url": "https://github.com/bpmn-io/bpmn-js-examples/issues"

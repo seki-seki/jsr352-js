@@ -1,25 +1,31 @@
 'use strict';
 
-var edn = require('jsedn');
+var edn = require('edn');
 //  TODO:now,it does not get environment value from server 
 var controlBusURL = "http://172.24.34.214:45102";
 var appName = "default";
 var xhr = new XMLHttpRequest();
-var map;
+var componentJSON;
 xhr.addEventListener("load", function (ev) {
-    map = edn.parse(xhr.responseText);
+    componentJSON = edn.valueOf(edn.parse(xhr.responseText));
 });
 xhr.open("GET", controlBusURL + "/" + appName + "/batch-components");
 xhr.send();
-console.log(map);
 
 function ComponentProvider() {
-
 }
 
 ComponentProvider.getBatchlets = function () {
-    console.log(map);
-    return appName;
+    return componentJSON["batch-component/batchlet"];
+};
+ComponentProvider.getItemWriters = function () {
+    return componentJSON["batch-component/item-writer"];
+};
+ComponentProvider.getItemReaders = function () {
+    return componentJSON["batch-component/item-reader"];
+};
+ComponentProvider.getItemProcessors = function () {
+    return componentJSON["batch-component/item-processors"];
 };
 
 module.exports = ComponentProvider;
