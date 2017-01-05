@@ -9,7 +9,15 @@
   "types": [
     {
       "name": "Job",
-      "superClass": ["bpmn:Participant"]
+      "superClass": ["bpmn:Process"],
+      "properties": [
+        {
+          "name": "restartable",
+          "isAttr": true,
+          "type": "Boolean",
+          "default": false
+        }
+      ]
     },
     {
       "name":"BatchComponent",

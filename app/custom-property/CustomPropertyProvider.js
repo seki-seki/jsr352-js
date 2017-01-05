@@ -30,7 +30,9 @@ function createGeneralTabGroups(element, bpmnFactory, elementRegistry) {
     entries: []
   };
   idProps(generalGroup, element, elementRegistry);
-  nameProps(generalGroup, element);
+  if (!is(element, 'jsr352:Transition')) {
+    nameProps(generalGroup, element);
+  }
   stepProps(generalGroup, element);
   transitionProps(generalGroup, element);
 

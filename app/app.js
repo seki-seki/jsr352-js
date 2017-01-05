@@ -1,6 +1,26 @@
 'use strict';
 
-var jobDiagram = require('../resources/job.bpmn');
+var initialDiagram =
+    '<?xml version="1.0" encoding="UTF-8"?>' +
+    '<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                      'xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" ' +
+                      'xmlns:jsr352="http://jsr352/" ' +
+                      'xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" ' +
+                      'xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" ' +
+                      'targetNamespace="http://bpmn.io/schema/bpmn" ' +
+                      'id="Definitions_1">' +
+      '<jsr352:Job id="Job_1" isExecutable="false">' +
+        '<bpmn:startEvent id="StartEvent_1"/>' +
+      '</jsr352:Job>' +
+      '<bpmndi:BPMNDiagram id="BPMNDiagram_1">' +
+        '<bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Job_1">' +
+          '<bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">' +
+            '<dc:Bounds height="36.0" width="36.0" x="173.0" y="102.0"/>' +
+          '</bpmndi:BPMNShape>' +
+        '</bpmndi:BPMNPlane>' +
+      '</bpmndi:BPMNDiagram>' +
+    '</bpmn:definitions>';
+
 
 var CustomModeler = require('./custom-modeler');
 var $ = require('jquery');
@@ -27,8 +47,7 @@ var modeler = new CustomModeler({
   }
 });
 
-modeler.createDiagram(function(err) {
-
+modeler.importXML(initialDiagram, function(err) {
   if (err) {
     console.error('something went wrong:', err);
   }
