@@ -40,7 +40,7 @@ function canConnect(source, target) {
 
   // allow connection between custom shape and task
   if (isCustom(source)) {
-    if (isAny(target, ['jsr352:BatchComponent', 'bpmn:EndEvent', 'bpmn:IntermediateEvent'])) {
+    if (isAny(target, ['jsr352:BatchComponent', 'bpmn:EndEvent', 'bpmn:IntermediateThrowEvent'])) {
       return {type: 'jsr352:Transition'};
     } else {
       return false;

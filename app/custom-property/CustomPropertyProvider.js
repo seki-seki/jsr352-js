@@ -33,7 +33,7 @@ function createGeneralTabGroups(element, bpmnFactory, elementRegistry) {
   if (!is(element, 'jsr352:Transition')) {
     nameProps(generalGroup, element);
   }
-  stepProps(generalGroup, element);
+  stepProps(generalGroup, element, bpmnFactory);
   transitionProps(generalGroup, element);
 
   var detailsGroup = {
@@ -77,20 +77,6 @@ function createExtensionElementsGroups(element, bpmnFactory, elementRegistry) {
   ];
 }
 
-// Create the custom Custom tab
-function createCustomTabGroups(element, elementRegistry) {
-
-  var StepGroup = {
-    id: 'Step',
-    label: 'Step',
-    entries: []
-  };
-
-  return [
-    StepGroup
-  ];
-}
-
 function CustomPropertiesProvider(eventBus, bpmnFactory, elementRegistry) {
 
   PropertiesActivator.call(this, eventBus);
@@ -103,12 +89,6 @@ function CustomPropertiesProvider(eventBus, bpmnFactory, elementRegistry) {
       groups: createGeneralTabGroups(element, bpmnFactory, elementRegistry)
     };
 
-    // The "Step" tab
-    var StepTab = {
-      id: 'Custom',
-      label: 'Custom',
-      groups: createCustomTabGroups(element, elementRegistry)
-    };
     var extensionsTab = {
       id: 'PropertyElements',
       label: 'Properties',
@@ -118,7 +98,6 @@ function CustomPropertiesProvider(eventBus, bpmnFactory, elementRegistry) {
     // Show general + "Custom" tab
     return [
       generalTab,
-      StepTab,
       extensionsTab
     ];
   };

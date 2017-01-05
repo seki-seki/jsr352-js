@@ -45,9 +45,15 @@
       "superClass": ["jsr352:Step"],
       "properties": [
         {
-          "name": "batchletRef",
-          "isAttr": true,
-          "type": "String"
+          "name": "batchlet",
+          "isAttr": false,
+          "type": "Batchlet"
+        },
+        {
+          "name": "listeners",
+          "isAttr": false,
+          "isMany": true,
+          "type": "Listener"
         }
       ]
     },
@@ -56,19 +62,15 @@
       "superClass": ["jsr352:Step"],
       "properties": [
         {
-          "name": "itemReaderRef",
-          "isAttr": true,
-          "type": "String"
+          "name": "chunk",
+          "isAttr": false,
+          "type": "Chunk"
         },
         {
-          "name": "itemProcessorRef",
-          "isAttr": true,
-          "type": "String"
-        },
-        {
-          "name": "itemWriterRef",
-          "isAttr": true,
-          "type": "String"
+          "name": "listeners",
+          "isAttr": false,
+          "isMany": true,
+          "type": "Listener"
         }
       ]
     },
@@ -89,6 +91,104 @@
           "isAttr": true,
           "type": "String",
           "default": "*"
+        }
+      ]
+    },
+    {
+      "name": "Chunk",
+      "properties": [
+        {
+          "name": "checkpoint-policy",
+          "isAttr": true,
+          "type": "String",
+          "default": "item"
+        },
+        {
+          "name": "item-count",
+          "isAttr": true,
+          "type": "Integer",
+          "default": 10
+        },
+        {
+          "name": "time-limit",
+          "isAttr": true,
+          "type": "Integer",
+          "default": 0
+        },
+        {
+          "name": "skip-limit",
+          "isAttr": true,
+          "type": "Integer"
+        },
+        {
+          "name": "retry-limit",
+          "isAttr": true,
+          "type": "Integer"
+        },
+        {
+          "name": "reader",
+          "isAttr": false,
+          "type": "Reader"
+        },
+        {
+          "name": "processor",
+          "isAttr": false,
+          "type": "Processor"
+        },
+        {
+          "name": "writer",
+          "isAttr": false,
+          "type": "Writer"
+        }
+      ]
+    },
+    {
+      "name": "Batchlet",
+      "properties": [
+        {
+          "name": "ref",
+          "isAttr": true,
+          "type": "String"
+        }
+      ]
+    },
+    {
+      "name": "Reader",
+      "properties": [
+        {
+          "name": "ref",
+          "isAttr": true,
+          "type": "String"
+        }
+      ]
+    },
+    {
+      "name": "Processor",
+      "properties": [
+        {
+          "name": "ref",
+          "isAttr": true,
+          "type": "String"
+        }
+      ]
+    },
+    {
+      "name": "Writer",
+      "properties": [
+        {
+          "name": "ref",
+          "isAttr": true,
+          "type": "String"
+        }
+      ]
+    },
+    {
+      "name": "Listener",
+      "properties": [
+        {
+          "name": "ref",
+          "isAttr": true,
+          "type": "String"
         }
       ]
     }

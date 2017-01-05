@@ -10,8 +10,8 @@ var BpmnElementFactory = require('bpmn-js/lib/features/modeling/ElementFactory')
 /**
  * A custom factory that knows how to create BPMN _and_ custom elements.
  */
-function CustomElementFactory(bpmnFactory, moddle) {
-  BpmnElementFactory.call(this, bpmnFactory, moddle);
+function CustomElementFactory(bpmnFactory, moddle, translate) {
+  BpmnElementFactory.call(this, bpmnFactory, moddle, translate);
 
   var self = this;
 
@@ -53,6 +53,9 @@ function CustomElementFactory(bpmnFactory, moddle) {
         id: businessObject.id
       }, attrs);
 
+      if (type === 'jsr352:ChunkStep') {
+        attrs.businessObject.chunk = bpmnFactory.create('jsr352:Chunk');
+      }
       return self.createBpmnElement(elementType, attrs);
     }
 
@@ -64,7 +67,7 @@ inherits(CustomElementFactory, BpmnElementFactory);
 
 module.exports = CustomElementFactory;
 
-CustomElementFactory.$inject = [ 'bpmnFactory', 'moddle' ];
+CustomElementFactory.$inject = [ 'bpmnFactory', 'moddle', 'translate' ];
 
 
 /**
