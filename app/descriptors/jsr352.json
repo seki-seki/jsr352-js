@@ -55,59 +55,59 @@
       ]
     },
     {
-      "name": "nexts",
+      "name": "Nexts",
       "superClass": [
         "Element"
       ],
       "properties": [
         {
           "name": "values",
-          "type": "Property",
+          "type": "Next",
           "isMany": true
         }
       ]
     },
     {
-      "name": "fails",
+      "name": "Fails",
       "superClass": [
         "Element"
       ],
       "properties": [
         {
           "name": "values",
-          "type": "Property",
+          "type": "Fail",
           "isMany": true
         }
       ]
     },
     {
-      "name": "ends",
+      "name": "Ends",
       "superClass": [
         "Element"
       ],
       "properties": [
         {
           "name": "values",
-          "type": "Property",
+          "type": "End",
           "isMany": true
         }
       ]
     },
     {
-      "name": "stops",
+      "name": "Stops",
       "superClass": [
         "Element"
       ],
       "properties": [
         {
           "name": "values",
-          "type": "Property",
+          "type": "Stop",
           "isMany": true
         }
       ]
     },
     {
-      "name": "next",
+      "name": "Next",
       "superClass": [
         "Element"
       ],
@@ -130,7 +130,7 @@
       ]
     },
     {
-      "name": "fail",
+      "name": "Fail",
       "superClass": [
         "Element"
       ],
@@ -153,7 +153,7 @@
       ]
     },
     {
-      "name": "end",
+      "name": "End",
       "superClass": [
         "Element"
       ],
@@ -176,7 +176,7 @@
       ]
     },
     {
-      "name": "stop",
+      "name": "Stop",
       "superClass": [
         "Element"
       ],

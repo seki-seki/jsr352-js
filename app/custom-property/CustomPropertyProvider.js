@@ -19,7 +19,7 @@ var processProps = require('bpmn-js-properties-panel/lib/provider/bpmn/parts/Pro
 
 // Require your custom property entries.
 var jobProps = require('./parts/JobProps'),
-        batchletOrChunkProps = require('./parts/BatchletOrChunkProps'),
+        stepProps = require('./parts/StepProps'),
         batchletProps = require('./parts/BatchletProps'),
         chunkProps =  require('./parts/ChunkProps'),
         transitionProps =  require('./parts/transitionProps');
@@ -33,7 +33,6 @@ function createGeneralTabGroups(element, bpmnFactory, elementRegistry) {
         label: 'General',
         entries: []
     };
-    idProps(generalGroup, element, elementRegistry);
     nameProps(generalGroup, element);
 
     var detailsGroup = {
@@ -82,7 +81,7 @@ function createTransitionTabGroups(element,bpmnFactory, elementRegistry) {
         label: 'Transitions',
         entries: [],
         enabled: function (element) {
-            return is(element, 'bpmn:Subprocess') || is(element, 'bpmn:Task');
+            return is(element, 'bpmn:SubProcess') || is(element, 'bpmn:Task');
         }
     };
     transitionProps(transitionGroup, element, bpmnFactory);
@@ -108,7 +107,7 @@ function createJobTabGroups(element, elementRegistry) {
     ];
 }
 
-function createStepTabGroups(element, elementRegistry) {
+function createStepTabGroups(element, bpmnFactory, elementRegistry) {
 
     var StepGroup = {
         id: 'Step',
@@ -116,7 +115,7 @@ function createStepTabGroups(element, elementRegistry) {
         entries: []
     };
 
-    batchletOrChunkProps(StepGroup, element);
+    stepProps(StepGroup, element, bpmnFactory);
     batchletProps(StepGroup, element);
     chunkProps(StepGroup, element);
     
@@ -145,7 +144,7 @@ function CustomPropertiesProvider(eventBus, bpmnFactory, elementRegistry) {
         var stepTab = {
             id: 'Step',
             label: 'Step',
-            groups: createStepTabGroups(element, elementRegistry)
+            groups: createStepTabGroups(element, bpmnFactory, elementRegistry)
         };
         var extensionsTab = {
             id: 'PropertyElements',

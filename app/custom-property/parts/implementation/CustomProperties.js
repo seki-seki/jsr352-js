@@ -148,7 +148,6 @@ module.exports = function (element, bpmnFactory, options) {
             if (modelProperties.indexOf('id') >= 0) {
                 propertyProps.id = generatePropertyId();
             }
-            console.log(modelProperties.indexOf('id'));
             var property = elementHelper.createElement(label, propertyProps, properties, bpmnFactory);
             commands.push(cmdHelper.addElementsTolist(element, properties, 'values', [property]));
 

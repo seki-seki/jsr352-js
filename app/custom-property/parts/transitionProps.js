@@ -8,12 +8,12 @@ var properties = require('./implementation/CustomProperties'),
 module.exports = function (group, element, bpmnFactory) {
 
     var nextEntry = properties(element, bpmnFactory, {
-        id: 'nexts',
+        id: 'Nexts',
         modelProperties: ['on', 'to'],
         labels: ['on', 'to'],
-        addLabel: 'next',
-        label: 'jsr352:next',
-        parentLabel:'jsr352:nexts',
+        addLabel: 'Next',
+        label: 'jsr352:Next',
+        parentLabel:'jsr352:Nexts',
         getParent: function (element, node, bo) {
             return bo.extensionElements;
         },
@@ -28,12 +28,12 @@ module.exports = function (group, element, bpmnFactory) {
     });
 
     var failEntry = properties(element, bpmnFactory, {
-        id: 'fails',
+        id: 'Fails',
         modelProperties: ['on', 'exit-status'],
         labels: ['on', 'exit-status'],
-        addLabel: 'fail',
-        label: 'jsr352:fail',
-        parentLabel:'jsr352:fails',
+        addLabel: 'Fail',
+        label: 'jsr352:Fail',
+        parentLabel:'jsr352:Fails',
         getParent: function (element, node, bo) {
             return bo.extensionElements;
         },
@@ -48,12 +48,12 @@ module.exports = function (group, element, bpmnFactory) {
     });
 
     var endEntry = properties(element, bpmnFactory, {
-        id: 'ends',
+        id: 'Ends',
         modelProperties: ['on', 'exit-status'],
         labels: ['on', 'exit-status'],
-        addLabel: 'end',
-        label: 'jsr352:end',
-        parentLabel:'jsr352:ends',
+        addLabel: 'End',
+        label: 'jsr352:End',
+        parentLabel:'jsr352:Ends',
         getParent: function (element, node, bo) {
             return bo.extensionElements;
         },
@@ -68,12 +68,12 @@ module.exports = function (group, element, bpmnFactory) {
     });
 
     var stopEntry = properties(element, bpmnFactory, {
-        id: 'stops',
+        id: 'Stops',
         modelProperties: ['on', 'exit-status' , 'restartable'],
         labels: ['on', 'exit-status', 'restartable'],
-        addLabel: 'stop',
-        label: 'jsr352:stop',
-        parentLabel:'jsr352:stops',
+        addLabel: 'Stop',
+        label: 'jsr352:Stop',
+        parentLabel:'jsr352:Stops',
         getParent: function (element, node, bo) {
             return bo.extensionElements;
         },

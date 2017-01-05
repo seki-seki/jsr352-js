@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<job id = "job" restartble = "false">
+<properties>
+<property name="key1" value="val1"/>
+</properties>
+<step id = "step1" next = "flow">
+<chunk>
+      <reader ref="example.csv.PostalReader"></reader>
+      <processor ref="example.csv.NormalizeKana"></processor>
+      <writer ref="example.csv.PostalLoader"></writer>
+    </chunk>
+    </step>
+<flow id= "flow" next = "split">
+<next on = "aa" to = "bb"/>
+<step id = "step2" next = "step3">
+<batchlet ref = "org.jobstreamer.batch.ShellBatchlet"/>
+<properties>
+<property name="key" value="val"/>
+</properties>
+<next on = "a" to = "b">
+<fail on="c" exit-status="d" />
+<stop on="g" exit-status="h" restartable="true" />
+<end on="e" exit-status="f" />
+</step>
+<step id = "step3">
+<batchlet ref = "org.jobstreamer.batch.ShellBatchlet"/
+</step>
+</flow>
+<split id = "split">
+<flow id = "flow-in-split1">
+<step name = "step4" next = "step5">
+<batchlet ref="example.HelloBatch">
+</step>
+<step name = "step5">
+<batchlet ref="example.HelloBatch">
+</step>
+</flow>
+<flow id = "flow-in-split2">
+<step name = "step6" next = "step7">
+<batchlet ref="example.HelloBatch">
+</step>
+<step name = "step7">
+<batchlet ref="example.HelloBatch">
+</step>
+</flow>
+</split>
+</job>

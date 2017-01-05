@@ -3,7 +3,7 @@
 function SelectOptionUtil() {}
 
 SelectOptionUtil.toSelectOption = function(array){
-    return array.map(function(value) {return {name: value, value: value};});
+    return [{name:"" ,value:""}].concat(array.map(function(value) {return {name: value, value: value};}));
 };
 
 module.exports = SelectOptionUtil;
