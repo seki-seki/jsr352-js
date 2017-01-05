@@ -2,10 +2,9 @@
 
 var edn = require('edn');
 //  TODO:now,it does not get environment value from server 
-var controlBusURL = document.querySelector("meta[name=control-bus-url]").getAttribute("content");
+var controlBusURL = "http://172.24.34.214:45102";
 var appName = "default";
 var xhr = new XMLHttpRequest();
-xhr.withCredentials = true;
 var componentJSON;
 xhr.addEventListener("load", function (ev) {
     componentJSON = edn.valueOf(edn.parse(xhr.responseText));
