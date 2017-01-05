@@ -8,10 +8,12 @@ var properties = require('./implementation/CustomProperties'),
 module.exports = function (group, element, bpmnFactory) {
 
     var nextEntry = properties(element, bpmnFactory, {
-        id: 'next',
+        id: 'nexts',
         modelProperties: ['on', 'to'],
         labels: ['on', 'to'],
         addLabel: 'next',
+        label: 'jsr352:next',
+        parentLabel:'jsr352:nexts',
         getParent: function (element, node, bo) {
             return bo.extensionElements;
         },
@@ -26,10 +28,12 @@ module.exports = function (group, element, bpmnFactory) {
     });
 
     var failEntry = properties(element, bpmnFactory, {
-        id: 'fail',
+        id: 'fails',
         modelProperties: ['on', 'exit-status'],
         labels: ['on', 'exit-status'],
         addLabel: 'fail',
+        label: 'jsr352:fail',
+        parentLabel:'jsr352:fails',
         getParent: function (element, node, bo) {
             return bo.extensionElements;
         },
@@ -44,10 +48,12 @@ module.exports = function (group, element, bpmnFactory) {
     });
 
     var endEntry = properties(element, bpmnFactory, {
-        id: 'end',
+        id: 'ends',
         modelProperties: ['on', 'exit-status'],
         labels: ['on', 'exit-status'],
         addLabel: 'end',
+        label: 'jsr352:end',
+        parentLabel:'jsr352:ends',
         getParent: function (element, node, bo) {
             return bo.extensionElements;
         },
@@ -62,10 +68,12 @@ module.exports = function (group, element, bpmnFactory) {
     });
 
     var stopEntry = properties(element, bpmnFactory, {
-        id: 'stop',
+        id: 'stops',
         modelProperties: ['on', 'exit-status' , 'restartable'],
         labels: ['on', 'exit-status', 'restartable'],
         addLabel: 'stop',
+        label: 'jsr352:stop',
+        parentLabel:'jsr352:stops',
         getParent: function (element, node, bo) {
             return bo.extensionElements;
         },

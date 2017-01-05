@@ -53,6 +53,156 @@
           "default": true
         }
       ]
+    },
+    {
+      "name": "nexts",
+      "superClass": [
+        "Element"
+      ],
+      "properties": [
+        {
+          "name": "values",
+          "type": "Property",
+          "isMany": true
+        }
+      ]
+    },
+    {
+      "name": "fails",
+      "superClass": [
+        "Element"
+      ],
+      "properties": [
+        {
+          "name": "values",
+          "type": "Property",
+          "isMany": true
+        }
+      ]
+    },
+    {
+      "name": "ends",
+      "superClass": [
+        "Element"
+      ],
+      "properties": [
+        {
+          "name": "values",
+          "type": "Property",
+          "isMany": true
+        }
+      ]
+    },
+    {
+      "name": "stops",
+      "superClass": [
+        "Element"
+      ],
+      "properties": [
+        {
+          "name": "values",
+          "type": "Property",
+          "isMany": true
+        }
+      ]
+    },
+    {
+      "name": "next",
+      "superClass": [
+        "Element"
+      ],
+      "properties": [
+        {
+          "name": "id",
+          "type": "String",
+          "isAttr": true
+        },
+        {
+          "name": "on",
+          "type": "String",
+          "isAttr": true
+        },
+        {
+          "name": "to",
+          "type": "String",
+          "isAttr": true
+        }
+      ]
+    },
+    {
+      "name": "fail",
+      "superClass": [
+        "Element"
+      ],
+      "properties": [
+        {
+          "name": "id",
+          "type": "String",
+          "isAttr": true
+        },
+        {
+          "name": "on",
+          "type": "String",
+          "isAttr": true
+        },
+        {
+          "name": "exit-status",
+          "type": "String",
+          "isAttr": true
+        }
+      ]
+    },
+    {
+      "name": "end",
+      "superClass": [
+        "Element"
+      ],
+      "properties": [
+        {
+          "name": "id",
+          "type": "String",
+          "isAttr": true
+        },
+        {
+          "name": "on",
+          "type": "String",
+          "isAttr": true
+        },
+        {
+          "name": "exit-status",
+          "type": "String",
+          "isAttr": true
+        }
+      ]
+    },
+    {
+      "name": "stop",
+      "superClass": [
+        "Element"
+      ],
+      "properties": [
+        {
+          "name": "id",
+          "type": "String",
+          "isAttr": true
+        },
+        {
+          "name": "on",
+          "type": "String",
+          "isAttr": true
+        },
+        {
+          "name": "exit-status",
+          "type": "String",
+          "isAttr": true
+        },
+        {
+          "name": "restartable",
+          "type": "Boolean",
+          "default":true,
+          "isAttr": true
+        }
+      ]
     }
   ]
 }
