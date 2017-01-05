@@ -72,7 +72,6 @@ function CustomUpdater(eventBus, bpmnjs) {
         target: target.id
       });
     }
-
   }
 
   this.executed([
@@ -125,7 +124,7 @@ function copyWaypoints(connection) {
 }
 
 function isCustom(element) {
-  return element && /custom\:/.test(element.type);
+  return element && /^jsr352\:/.test(element.type);
 }
 
 function ifCustomElement(fn) {

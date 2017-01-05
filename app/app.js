@@ -12,22 +12,22 @@ var propertiesPanelModule = require('bpmn-js-properties-panel'),
 
 
 var modeler = new CustomModeler({
-    container: '#canvas',
-    keyboard: { bindTo: document },
-    propertiesPanel: {
-        parent: '#js-properties-panel'
-    },
-    additionalModules: [
-        propertiesPanelModule,
-        propertiesProviderModule
-    ],
+  container: '#canvas',
+  keyboard: { bindTo: document },
+  propertiesPanel: {
+    parent: '#js-properties-panel'
+  },
+  additionalModules: [
+    propertiesPanelModule,
+    propertiesProviderModule
+  ],
   moddleExtensions: {
     jsr352: jsr352ModdleDescriptor,
     camunda: camundaModdleDescriptor
   }
 });
 
-modeler.importXML(jobDiagram, function(err) {
+modeler.createDiagram(function(err) {
 
   if (err) {
     console.error('something went wrong:', err);

@@ -5,19 +5,20 @@ var assign = require('lodash/object/assign');
 /**
  * A palette that allows you to create BPMN _and_ custom elements.
  */
-function PaletteProvider(palette, create, elementFactory, spaceTool, lassoTool) {
+function PaletteProvider(palette, create, elementFactory, spaceTool, lassoTool, translate) {
 
   this._create = create;
   this._elementFactory = elementFactory;
   this._spaceTool = spaceTool;
   this._lassoTool = lassoTool;
+  this._translate = translate;
 
   palette.registerProvider(this);
 }
 
 module.exports = PaletteProvider;
 
-PaletteProvider.$inject = [ 'palette', 'create', 'elementFactory', 'spaceTool', 'lassoTool' ];
+PaletteProvider.$inject = [ 'palette', 'create', 'elementFactory', 'spaceTool', 'lassoTool', 'translate' ];
 
 
 PaletteProvider.prototype.getPaletteEntries = function(element) {
@@ -26,7 +27,8 @@ PaletteProvider.prototype.getPaletteEntries = function(element) {
       create = this._create,
       elementFactory = this._elementFactory,
       spaceTool = this._spaceTool,
-      lassoTool = this._lassoTool;
+      lassoTool = this._lassoTool,
+      translate = this._translate;
 
 
   function createAction(type, group, className, title, options) {
@@ -41,7 +43,7 @@ PaletteProvider.prototype.getPaletteEntries = function(element) {
       create.start(event, shape);
     }
 
-    var shortType = type.replace(/^bpmn\:/, '');
+    var shortType = type.replace(/^[^\:]*\:/, '');
 
     return {
       group: group,
@@ -54,21 +56,19 @@ PaletteProvider.prototype.getPaletteEntries = function(element) {
     };
   }
 
-  function createParticipant(event, collapsed) {
-    create.start(event, elementFactory.createParticipantShape(collapsed));
-  }
-
   assign(actions, {
-//    'custom-fail': createAction(
-//      'custom:fail', 'custom', 'icon-custom-fail'
-//    ),
-//    'custom-stop': createAction(
-//      'custom:stop', 'custom', 'icon-custom-stop'
-//    ),
-//    'custom-separator': {
-//      group: 'custom',
-//      separator: true
-//    },
+    'jsr352-chunk-step': createAction(
+      'jsr352:ChunkStep', 'custom', 'icon-jsr352-chunk-step'
+    ),
+    'jsr352-batchlet-step': createAction(
+      'jsr352:BatchletStep', 'custom', 'icon-jsr352-batchlet-step'
+    ),
+    'jsr352-flow': createAction(
+      'jsr352:Flow', 'custom', 'icon-jsr352-flow'
+    ),
+    'jsr352-split': createAction(
+      'jsr352:Split', 'custom', 'icon-jsr352-split'
+    ),
     'lasso-tool': {
       group: 'tools',
       className: 'bpmn-icon-lasso-tool',
@@ -99,22 +99,6 @@ PaletteProvider.prototype.getPaletteEntries = function(element) {
     'create.end-event': createAction(
       'bpmn:EndEvent', 'event', 'bpmn-icon-end-event-none'
     ),
-    'create.task': createAction(
-      'bpmn:Task', 'activity', 'bpmn-icon-task'
-    ),
-    'create.subprocess-expanded': createAction(
-      'bpmn:SubProcess', 'activity', 'bpmn-icon-subprocess-expanded', 'Create expanded SubProcess',
-      { isExpanded: true }
-    ),
-    'create.participant-expanded': {
-      group: 'collaboration',
-      className: 'bpmn-icon-participant',
-      title: 'Create Pool/Participant',
-      action: {
-        dragstart: createParticipant,
-        click: createParticipant
-      }
-    }
   });
 
   return actions;

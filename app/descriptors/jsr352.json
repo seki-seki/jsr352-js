@@ -8,20 +8,79 @@
   "associations": [],
   "types": [
     {
-      "name": "Compornent",
-      "extends": [
-        "bpmn:Task"
-      ],
+      "name": "Job",
+      "superClass": ["bpmn:Participant"]
+    },
+    {
+      "name":"BatchComponent",
+      "superClass": ["bpmn:FlowElement", "bpmn:FlowNode"]
+    },
+    {
+      "name":"Step",
+      "superClass": ["jsr352:BatchComponent"],
       "properties": [
         {
-          "name": "batchletOrChunk",
+          "name": "startLimit",
+          "isAttr": true,
+          "type": "String",
+          "default": "0"
+        },
+        {
+          "name": "allowIfComplete",
+          "isAttr": true,
+          "type": "String"
+        }
+      ]
+    },
+    {
+      "name":"BatchletStep",
+      "superClass": ["jsr352:Step"],
+      "properties": [
+        {
+          "name": "batchletRef",
+          "isAttr": true,
+          "type": "String"
+        }
+      ]
+    },
+    {
+      "name":"ChunkStep",
+      "superClass": ["jsr352:Step"],
+      "properties": [
+        {
+          "name": "itemReaderRef",
           "isAttr": true,
           "type": "String"
         },
         {
-          "name": "batchletCompornent",
+          "name": "itemProcessorRef",
           "isAttr": true,
           "type": "String"
+        },
+        {
+          "name": "itemWriterRef",
+          "isAttr": true,
+          "type": "String"
+        }
+      ]
+    },
+    {
+      "name": "Flow",
+      "superClass": ["jsr352:BatchComponent", "bpmn:SubProcess"]
+    },
+    {
+      "name": "Split",
+      "superClass": ["jsr352:BatchComponent", "bpmn:SubProcess"]
+    },
+    {
+      "name": "Transition",
+      "superClass": ["bpmn:SequenceFlow"],
+      "properties": [
+        {
+          "name": "on",
+          "isAttr": true,
+          "type": "String",
+          "default": "*"
         }
       ]
     }

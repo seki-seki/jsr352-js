@@ -18,13 +18,12 @@ var processProps = require('bpmn-js-properties-panel/lib/provider/bpmn/parts/Pro
 
 
 // Require your custom property entries.
-var batchletOrChunkProps = require('./parts/BatchletOrChunkProps'),
-    batchletProps = require('./parts/BatchletProps');
+var stepProps = require('./parts/StepProps'),
+    transitionProps = require('./parts/TransitionProps');
 
 // The general tab contains all bpmn relevant properties.
 // The properties are organized in groups.
 function createGeneralTabGroups(element, bpmnFactory, elementRegistry) {
-
   var generalGroup = {
     id: 'general',
     label: 'General',
@@ -32,6 +31,8 @@ function createGeneralTabGroups(element, bpmnFactory, elementRegistry) {
   };
   idProps(generalGroup, element, elementRegistry);
   nameProps(generalGroup, element);
+  stepProps(generalGroup, element);
+  transitionProps(generalGroup, element);
 
   var detailsGroup = {
     id: 'details',
@@ -63,8 +64,9 @@ function createExtensionElementsGroups(element, bpmnFactory, elementRegistry) {
     label: 'Properties',
     entries: [],
     enabled: function(element) {
-        return is(element, 'bpmn:Task') || is(element, 'bpmn:Participant');
-      }
+      return is(element, 'bpmn:Task') || is(element, 'bpmn:Participant')
+        || is(element, 'jsr352:fail');
+    }
   };
   properties(propertiesGroup, element, bpmnFactory);
 
@@ -81,10 +83,6 @@ function createCustomTabGroups(element, elementRegistry) {
     label: 'Step',
     entries: []
   };
-
-  batchletOrChunkProps(StepGroup, element);
-  batchletProps(StepGroup, element);
-
 
   return [
     StepGroup

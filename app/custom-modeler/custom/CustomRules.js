@@ -3,30 +3,56 @@
 var reduce = require('lodash/collection/reduce'),
     inherits = require('inherits');
 
-var is = require('bpmn-js/lib/util/ModelUtil').is;
+var is = require('bpmn-js/lib/util/ModelUtil').is,
+    isAny = require('bpmn-js/lib/features/modeling/util/ModelingUtil').isAny;
 
-var RuleProvider = require('diagram-js/lib/features/rules/RuleProvider');
+var BpmnRules = require('bpmn-js/lib/features/rules/BpmnRules');
 
 var HIGH_PRIORITY = 1500;
 
 
 function isCustom(element) {
-  return element && /^custom\:/.test(element.type);
+  return element && /^jsr352\:/.test(element.type);
 }
 
 /**
  * Specific rules for custom elements
  */
 function CustomRules(eventBus) {
-  RuleProvider.call(this, eventBus);
+  BpmnRules.call(this, eventBus);
 }
 
-inherits(CustomRules, RuleProvider);
+inherits(CustomRules, BpmnRules);
 
 CustomRules.$inject = [ 'eventBus' ];
 
 module.exports = CustomRules;
 
+/**
+ * Can source and target be connected?
+ */
+function canConnect(source, target) {
+
+  // only judge about custom elements
+  if (!isCustom(source) && !isCustom(target)) {
+    return {};
+  }
+
+  // allow connection between custom shape and task
+  if (isCustom(source)) {
+    if (isAny(target, ['jsr352:BatchComponent', 'bpmn:EndEvent', 'bpmn:IntermediateEvent'])) {
+      return {type: 'jsr352:Transition'};
+    } else {
+      return false;
+    }
+  } else if (isCustom(target)) {
+    if (isAny(source, ['jsr352:BatchComponent', 'bpmn:StartEvent'])) {
+      return {type: 'jsr352:Transition'};
+    } else {
+      return false;
+    }
+  }
+};
 
 CustomRules.prototype.init = function() {
 
@@ -34,39 +60,17 @@ CustomRules.prototype.init = function() {
    * Can shape be created on target container?
    */
   function canCreate(shape, target) {
-
     // only judge about custom elements
-    if (!isCustom(shape)) {
+    if (!isCustom(shape) || !target) {
       return;
     }
 
-    // allow creation on processes
-    return is(target, 'bpmn:Process') || is(target, 'bpmn:Participant') || is(target, 'bpmn:Collaboration');
-  }
-
-  /**
-   * Can source and target be connected?
-   */
-  function canConnect(source, target) {
-
-    // only judge about custom elements
-    if (!isCustom(source) && !isCustom(target)) {
-      return;
-    }
-
-    // allow connection between custom shape and task
-    if (isCustom(source)) {
-      if (is(target, 'bpmn:Task')) {
-        return {type: 'custom:connection'};
-      } else {
-        return false;
-      }
-    } else if (isCustom(target)) {
-      if (is(source, 'bpmn:Task')) {
-        return {type: 'custom:connection'};
-      } else {
-        return false;
-      }
+    if (isAny(shape, ['jsr352:BatchletStep', 'jsr352:ChunkStep'])) {
+      return isAny(target, ['jsr352:Flow', 'bpmn:Process', 'bpmn:Participant', 'bpmn:Collaboration']);
+    } else if (is(shape, 'jsr352:Flow')) {
+      return isAny(target, ['jsr352:Split', 'bpmn:Process', 'bpmn:Participant', 'bpmn:Collaboration']);
+    } else {
+      return isAny(target, ['bpmn:Process', 'bpmn:Participant', 'bpmn:Collaboration']);
     }
   }
 
@@ -136,3 +140,5 @@ CustomRules.prototype.init = function() {
   });
 
 };
+
+CustomRules.prototype.canConnect = canConnect;

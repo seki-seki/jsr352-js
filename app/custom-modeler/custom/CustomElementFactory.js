@@ -31,25 +31,29 @@ function CustomElementFactory(bpmnFactory, moddle) {
     }
 
     // add type to businessObject if custom
-    if (/^custom\:/.test(type)) {
-      if (!attrs.businessObject) {
-        attrs.businessObject = {
-          type: type,
-        };
+    if (/^jsr352\:/.test(type)) {
+      var businessObject = attrs.businessObject;
+      if (!businessObject) {
+        businessObject = this._bpmnFactory.create(type, attrs);
 
         if(attrs.id) {
-          assign(attrs.businessObject, {
+          assign(businessObject, {
             id: attrs.id
           });
         }
       }
 
       // add width and height if shape
-      if (!/\:connection$/.test(type)) {
+      if (!/\:Connection$/.test(type)) {
         assign(attrs, self._getCustomElementSize(type));
       }
 
-      return self.baseCreate(elementType, attrs);
+      attrs = assign({
+        businessObject: businessObject,
+        id: businessObject.id
+      }, attrs);
+
+      return self.createBpmnElement(elementType, attrs);
     }
 
     return self.createBpmnElement(elementType, attrs);
@@ -86,8 +90,10 @@ CustomElementFactory.$inject = [ 'bpmnFactory', 'moddle' ];
 CustomElementFactory.prototype._getCustomElementSize = function (type) {
   var shapes = {
     __default: { width: 100, height: 80 },
-    'custom:triangle': { width: 40, height: 40 },
-    'custom:circle': { width: 140, height: 140 }
+    'jsr352:Split': { width: 600, height: 400 },
+    'jsr352:Frow': { width: 400, height: 180 },
+    'jsr352:ChunkStep': { width: 100, height: 80 },
+    'jsr352:BatchletStep': { width: 100, height: 80 }
   };
 
   return shapes[type] || shapes.__default;
