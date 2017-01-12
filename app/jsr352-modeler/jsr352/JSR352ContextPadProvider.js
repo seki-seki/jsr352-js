@@ -10,7 +10,7 @@ var assign = require('lodash/object/assign'),
     pick = require('lodash/object/pick'),
     bind = require('lodash/function/bind');
 
-function CustomContextPadProvider(eventBus, contextPad, modeling, elementFactory, connect,
+function JSR352ContextPadProvider(eventBus, contextPad, modeling, elementFactory, connect,
                                   create, popupMenu, canvas, rules, translate) {
 
   ContextPadProvider.call(this, eventBus, contextPad, modeling, elementFactory, connect, create,
@@ -52,9 +52,12 @@ function CustomContextPadProvider(eventBus, contextPad, modeling, elementFactory
 
     function appendBatchComponentMenu(actions) {
       assign(actions, {
-        'append.batchlet-step': appendAction('jsr352:BatchletStep', 'icon-jsr352-batchlet-step', 'Append batchlet step'),
-        'append.chunk-step': appendAction('jsr352:ChunkStep', 'icon-jsr352-chunk-step', 'Append chunk step'),
-        'append.end-event': appendAction('bpmn:EndEvent', 'bpmn-icon-end-event-none'),
+        'append.step': appendAction('jsr352:Step', 'icon-jsr352-step', 'Append step'),
+        'append.flow': appendAction('jsr352:Flow', 'icon-jsr352-flow', 'Append flow'),
+        'append.split': appendAction('jsr352:Split', 'icon-jsr352-split', 'Append split'),
+        'append.end-event': appendAction('jsr352:End', 'bpmn-icon-end-event-terminate'),
+        'append.fail-event': appendAction('jsr352:Fail', 'bpmn-icon-end-event-error'),
+        'append.stop-event': appendAction('jsr352:Stop', 'bpmn-icon-intermediate-event-none'),
         'connect': {
           group: 'connect',
           className: 'bpmn-icon-connection-multi',
@@ -67,21 +70,23 @@ function CustomContextPadProvider(eventBus, contextPad, modeling, elementFactory
       });
     }
 
-    if (isAny(businessObject, ['jsr352:ChunkStep', 'jsr352:BatchletStep', 'jsr352:Flow'])) {
+    if (isAny(businessObject, ['jsr352:Step', 'jsr352:Flow', 'jsr352:Split'])) {
       actions = pick(actions, ['connect', 'delete']);
       appendBatchComponentMenu(actions);
-    } else if (isAny(businessObject, ['bpmn:StartEvent'])) {
+    } else if (isAny(businessObject, ['jsr352:Start'])) {
       actions = pick(actions, ['connect', 'delete']);
       appendBatchComponentMenu(actions);
+    } else {
+      actions = pick(actions, ['delete']);
     }
 
     return actions;
   };
 }
 
-inherits(CustomContextPadProvider, ContextPadProvider);
+inherits(JSR352ContextPadProvider, ContextPadProvider);
 
-CustomContextPadProvider.$inject = [
+JSR352ContextPadProvider.$inject = [
   'eventBus',
   'contextPad',
   'modeling',
@@ -94,4 +99,4 @@ CustomContextPadProvider.$inject = [
   'translate'
 ];
 
-module.exports = CustomContextPadProvider;
+module.exports = JSR352ContextPadProvider;

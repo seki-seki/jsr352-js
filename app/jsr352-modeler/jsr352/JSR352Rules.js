@@ -1,6 +1,7 @@
 'use strict';
 
 var reduce = require('lodash/collection/reduce'),
+    every = require('lodash/collection/every'),
     inherits = require('inherits');
 
 var is = require('bpmn-js/lib/util/ModelUtil').is,
@@ -11,22 +12,22 @@ var BpmnRules = require('bpmn-js/lib/features/rules/BpmnRules');
 var HIGH_PRIORITY = 1500;
 
 
-function isCustom(element) {
-  return element && /^jsr352\:/.test(element.type);
+function isJSR352(element) {
+  return element && new RegExp('^jsr352:').test(element.type);
 }
 
 /**
  * Specific rules for custom elements
  */
-function CustomRules(eventBus) {
+function JSR352Rules(eventBus) {
   BpmnRules.call(this, eventBus);
 }
 
-inherits(CustomRules, BpmnRules);
+inherits(JSR352Rules, BpmnRules);
 
-CustomRules.$inject = [ 'eventBus' ];
+JSR352Rules.$inject = [ 'eventBus' ];
 
-module.exports = CustomRules;
+module.exports = JSR352Rules;
 
 /**
  * Can source and target be connected?
@@ -34,19 +35,19 @@ module.exports = CustomRules;
 function canConnect(source, target) {
 
   // only judge about custom elements
-  if (!isCustom(source) && !isCustom(target)) {
+  if (!isJSR352(source) && !isJSR352(target)) {
     return {};
   }
 
   // allow connection between custom shape and task
-  if (isCustom(source)) {
-    if (isAny(target, ['jsr352:BatchComponent', 'bpmn:EndEvent', 'bpmn:IntermediateThrowEvent'])) {
+  if (isJSR352(source)) {
+    if (isAny(target, ['jsr352:BatchComponent', 'jsr352:End', 'jsr352:Fail', 'jsr352:Stop'])) {
       return {type: 'jsr352:Transition'};
     } else {
       return false;
     }
-  } else if (isCustom(target)) {
-    if (isAny(source, ['jsr352:BatchComponent', 'bpmn:StartEvent'])) {
+  } else if (isJSR352(target)) {
+    if (isAny(source, ['jsr352:BatchComponent', 'jsr352:Start'])) {
       return {type: 'jsr352:Transition'};
     } else {
       return false;
@@ -54,23 +55,35 @@ function canConnect(source, target) {
   }
 };
 
-CustomRules.prototype.init = function() {
+function hasNoChildren(element, self) {
+  return every(element.children, function(child) {
+    return child == self || !isAny(child, ['jsr352:Batchlet', 'jsr352:Chunk']);
+  });
+}
+
+JSR352Rules.prototype.init = function() {
 
   /**
    * Can shape be created on target container?
    */
   function canCreate(shape, target) {
     // only judge about custom elements
-    if (!isCustom(shape) || !target) {
+    if (!isJSR352(shape) || !target) {
       return;
     }
 
-    if (isAny(shape, ['jsr352:BatchletStep', 'jsr352:ChunkStep'])) {
-      return isAny(target, ['jsr352:Flow', 'bpmn:Process', 'bpmn:Participant', 'bpmn:Collaboration']);
+    if (isAny(shape, ['jsr352:Step'])) {
+      return isAny(target, ['jsr352:Flow', 'jsr352:Job']);
+    } else if (is(shape, 'jsr352:Listener')) {
+      return isAny(target, ['jsr352:Step']);
     } else if (is(shape, 'jsr352:Flow')) {
-      return isAny(target, ['jsr352:Split', 'bpmn:Process', 'bpmn:Participant', 'bpmn:Collaboration']);
+      return isAny(target, ['jsr352:Split', 'jsr352:Job']);
+    } else if (isAny(shape, ['jsr352:Batchlet', 'jsr352:Chunk'])) {
+      return isAny(target, ['jsr352:Step']) && hasNoChildren(target, shape);
+    } else if (isAny(shape, ['jsr352:Reader', 'jsr352:Processor', 'jsr352:Writer'])) {
+      return isAny(target, ['jsr352:Chunk']);
     } else {
-      return isAny(target, ['bpmn:Process', 'bpmn:Participant', 'bpmn:Collaboration']);
+      return isAny(target, ['jsr352:Job']);
     }
   }
 
@@ -85,10 +98,10 @@ CustomRules.prototype.init = function() {
     // if any shape cannot be moved, the group cannot be moved, too
     var allowed = reduce(shapes, function(result, s) {
       if (type === undefined) {
-        type = isCustom(s);
+        type = isJSR352(s);
       }
 
-      if (type !== isCustom(s) || result === false) {
+      if (type !== isJSR352(s) || result === false) {
         return false;
       }
 
@@ -110,7 +123,7 @@ CustomRules.prototype.init = function() {
   this.addRule('shape.resize', HIGH_PRIORITY, function(context) {
     var shape = context.shape;
 
-    if (isCustom(shape)) {
+    if (isJSR352(shape) && !isAny(shape, ['jsr352:Flow', 'jsr352:Split', 'jsr352:Step'])) {
       // cannot resize custom elements
       return false;
     }
@@ -141,4 +154,4 @@ CustomRules.prototype.init = function() {
 
 };
 
-CustomRules.prototype.canConnect = canConnect;
+JSR352Rules.prototype.canConnect = canConnect;

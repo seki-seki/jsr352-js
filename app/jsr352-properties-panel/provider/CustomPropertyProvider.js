@@ -2,7 +2,8 @@
 
 
 var inherits = require('inherits');
-var is = require('bpmn-js/lib/util/ModelUtil').is;
+var is = require('bpmn-js/lib/util/ModelUtil').is,
+    isAny = require('bpmn-js/lib/features/modeling/util/ModelingUtil').isAny;
 
 var PropertiesActivator = require('bpmn-js-properties-panel/lib/PropertiesActivator');
 
@@ -19,6 +20,7 @@ var processProps = require('bpmn-js-properties-panel/lib/provider/bpmn/parts/Pro
 
 // Require your custom property entries.
 var stepProps = require('./parts/StepProps'),
+    listenerProps = require('./parts/ListenerProps'),
     transitionProps = require('./parts/TransitionProps');
 
 // The general tab contains all bpmn relevant properties.
@@ -29,11 +31,12 @@ function createGeneralTabGroups(element, bpmnFactory, elementRegistry) {
     label: 'General',
     entries: []
   };
-  idProps(generalGroup, element, elementRegistry);
-  if (!is(element, 'jsr352:Transition')) {
+  //idProps(generalGroup, element, elementRegistry);
+  if (isAny(element, ['jsr352:BatchComponent', 'jsr352:Job'])) {
     nameProps(generalGroup, element);
   }
   stepProps(generalGroup, element, bpmnFactory);
+  listenerProps(generalGroup, element, bpmnFactory);
   transitionProps(generalGroup, element);
 
   var detailsGroup = {
@@ -66,8 +69,7 @@ function createExtensionElementsGroups(element, bpmnFactory, elementRegistry) {
     label: 'Properties',
     entries: [],
     enabled: function(element) {
-      return is(element, 'bpmn:Task') || is(element, 'bpmn:Participant')
-        || is(element, 'jsr352:fail');
+      return isAny(element, ['jsr352:Job', 'jsr352:Step', 'jsr352:Listener', 'jsr352:Batchlet', 'jsr352:Reader', 'jsr352:Processor', 'jsr352:Writer']);
     }
   };
   properties(propertiesGroup, element, bpmnFactory);
@@ -95,7 +97,6 @@ function CustomPropertiesProvider(eventBus, bpmnFactory, elementRegistry) {
       groups: createExtensionElementsGroups(element, bpmnFactory, elementRegistry)
     };
 
-    // Show general + "Custom" tab
     return [
       generalTab,
       extensionsTab

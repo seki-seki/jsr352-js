@@ -25,7 +25,7 @@
     },
     {
       "name":"Step",
-      "superClass": ["jsr352:BatchComponent"],
+      "superClass": ["jsr352:BatchComponent", "bpmn:SubProcess"],
       "properties": [
         {
           "name": "startLimit",
@@ -37,40 +37,22 @@
           "name": "allowIfComplete",
           "isAttr": true,
           "type": "String"
-        }
-      ]
-    },
-    {
-      "name":"BatchletStep",
-      "superClass": ["jsr352:Step"],
-      "properties": [
-        {
-          "name": "batchlet",
-          "isAttr": false,
-          "type": "Batchlet"
         },
         {
           "name": "listeners",
           "isAttr": false,
           "isMany": true,
           "type": "Listener"
-        }
-      ]
-    },
-    {
-      "name":"ChunkStep",
-      "superClass": ["jsr352:Step"],
-      "properties": [
+        },
         {
           "name": "chunk",
           "isAttr": false,
           "type": "Chunk"
         },
         {
-          "name": "listeners",
+          "name": "batchlet",
           "isAttr": false,
-          "isMany": true,
-          "type": "Listener"
+          "type": "Batchlet"
         }
       ]
     },
@@ -96,6 +78,7 @@
     },
     {
       "name": "Chunk",
+      "superClass": ["bpmn:SubProcess", "bpmn:FlowElement", "bpmn:FlowNode"],
       "properties": [
         {
           "name": "checkpoint-policy",
@@ -144,6 +127,7 @@
     },
     {
       "name": "Batchlet",
+      "superClass": ["bpmn:FlowElement", "bpmn:FlowNode"],
       "properties": [
         {
           "name": "ref",
@@ -154,6 +138,7 @@
     },
     {
       "name": "Reader",
+      "superClass": ["bpmn:FlowElement", "bpmn:FlowNode"],
       "properties": [
         {
           "name": "ref",
@@ -164,6 +149,7 @@
     },
     {
       "name": "Processor",
+      "superClass": ["bpmn:FlowElement", "bpmn:FlowNode"],
       "properties": [
         {
           "name": "ref",
@@ -174,6 +160,7 @@
     },
     {
       "name": "Writer",
+      "superClass": ["bpmn:FlowElement", "bpmn:FlowNode"],
       "properties": [
         {
           "name": "ref",
@@ -184,9 +171,53 @@
     },
     {
       "name": "Listener",
+      "superClass": ["bpmn:FlowElement", "bpmn:FlowNode"],
       "properties": [
         {
           "name": "ref",
+          "isAttr": true,
+          "type": "String"
+        }
+      ]
+    },
+    {
+      "name": "Start",
+      "superClass": ["bpmn:StartEvent"]
+    },
+
+    {
+      "name": "End",
+      "superClass": ["bpmn:EndEvent"],
+      "properties": [
+        {
+          "name": "exit-status",
+          "isAttr": true,
+          "type": "String"
+        }
+      ]
+    },
+    {
+      "name": "Fail",
+      "superClass": ["bpmn:EndEvent"],
+      "properties": [
+        {
+          "name": "exit-status",
+          "isAttr": true,
+          "type": "String"
+        }
+      ]
+    },
+    {
+      "name": "Stop",
+      "superClass": ["bpmn:EndEvent"],
+      "properties": [
+        {
+          "name": "exit-status",
+          "isAttr": true,
+          "type": "String"
+        },
+        {
+          "name": "restart",
           "isAttr": true,
           "type": "String"
         }

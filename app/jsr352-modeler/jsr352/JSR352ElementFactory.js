@@ -1,7 +1,10 @@
 'use strict';
 
 var assign = require('lodash/object/assign'),
-    inherits = require('inherits');
+    inherits = require('inherits'),
+    is = require('bpmn-js/lib/util/ModelUtil').is,
+    isAny = require('bpmn-js/lib/features/modeling/util/ModelingUtil').isAny;
+
 
 var BpmnElementFactory = require('bpmn-js/lib/features/modeling/ElementFactory'),
     LabelUtil = require('bpmn-js/lib/util/LabelUtil');
@@ -10,7 +13,7 @@ var BpmnElementFactory = require('bpmn-js/lib/features/modeling/ElementFactory')
 /**
  * A custom factory that knows how to create BPMN _and_ custom elements.
  */
-function CustomElementFactory(bpmnFactory, moddle, translate) {
+function JSR352ElementFactory(bpmnFactory, moddle, translate) {
   BpmnElementFactory.call(this, bpmnFactory, moddle, translate);
 
   var self = this;
@@ -53,9 +56,6 @@ function CustomElementFactory(bpmnFactory, moddle, translate) {
         id: businessObject.id
       }, attrs);
 
-      if (type === 'jsr352:ChunkStep') {
-        attrs.businessObject.chunk = bpmnFactory.create('jsr352:Chunk');
-      }
       return self.createBpmnElement(elementType, attrs);
     }
 
@@ -63,11 +63,11 @@ function CustomElementFactory(bpmnFactory, moddle, translate) {
   };
 }
 
-inherits(CustomElementFactory, BpmnElementFactory);
+inherits(JSR352ElementFactory, BpmnElementFactory);
 
-module.exports = CustomElementFactory;
+module.exports = JSR352ElementFactory;
 
-CustomElementFactory.$inject = [ 'bpmnFactory', 'moddle', 'translate' ];
+JSR352ElementFactory.$inject = [ 'bpmnFactory', 'moddle', 'translate' ];
 
 
 /**
@@ -90,13 +90,22 @@ CustomElementFactory.$inject = [ 'bpmnFactory', 'moddle', 'translate' ];
  *
  * @return {Dimensions} a {width, height} object representing the size of the element
  */
-CustomElementFactory.prototype._getCustomElementSize = function (type) {
+JSR352ElementFactory.prototype._getCustomElementSize = function (type) {
   var shapes = {
     __default: { width: 100, height: 80 },
     'jsr352:Split': { width: 600, height: 400 },
     'jsr352:Frow': { width: 400, height: 180 },
-    'jsr352:ChunkStep': { width: 100, height: 80 },
-    'jsr352:BatchletStep': { width: 100, height: 80 }
+    'jsr352:Step': { width: 120, height: 100 },
+    'jsr352:Batchlet': { width: 100, height: 80 },
+    'jsr352:Chunk': { width: 100, height: 80 },
+    'jsr352:Reader': { width: 80, height: 20 },
+    'jsr352:Processor': { width: 80, height: 20 },
+    'jsr352:Writer': { width: 80, height: 20 },
+    'jsr352:Start': { width: 40, height: 40 },
+    'jsr352:End': { width: 40, height: 40 },
+    'jsr352:Fail': { width: 40, height: 40 },
+    'jsr352:Stop': { width: 40, height: 40 },
+    'jsr352:Listener': {width: 80, height: 20}
   };
 
   return shapes[type] || shapes.__default;

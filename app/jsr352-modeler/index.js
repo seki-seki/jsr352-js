@@ -7,18 +7,18 @@ var assign = require('lodash/object/assign'),
 
 var inherits = require('inherits');
 
-function CustomModeler(options) {
+function JSR352Modeler(options) {
   Modeler.call(this, options);
 
   this._customElements = [];
 }
 
-inherits(CustomModeler, Modeler);
+inherits(JSR352Modeler, Modeler);
 
-CustomModeler.prototype._modules = [].concat(
-  CustomModeler.prototype._modules,
+JSR352Modeler.prototype._modules = [].concat(
+  JSR352Modeler.prototype._modules,
   [
-    require('./custom')
+    require('./jsr352')
   ]
 );
 
@@ -27,22 +27,21 @@ CustomModeler.prototype._modules = [].concat(
  *
  * @param {Object} customElement
  */
-CustomModeler.prototype._addCustomShape = function(customElement) {
+JSR352Modeler.prototype._addCustomShape = function(element) {
 
-  this._customElements.push(customElement);
+  this._customElements.push(element);
 
   var canvas = this.get('canvas'),
       elementFactory = this.get('elementFactory');
 
-  var customAttrs = assign({ businessObject: customElement }, customElement);
+  var customAttrs = assign({ businessObject: element }, element);
 
   var customShape = elementFactory.create('shape', customAttrs);
-
   return canvas.addShape(customShape);
 
 };
 
-CustomModeler.prototype._addCustomConnection = function(customElement) {
+JSR352Modeler.prototype._addCustomConnection = function(customElement) {
 
   this._customElements.push(customElement);
 
@@ -67,7 +66,7 @@ CustomModeler.prototype._addCustomConnection = function(customElement) {
  *
  * @param {Array<Object>} customElements
  */
-CustomModeler.prototype.addCustomElements = function(customElements) {
+JSR352Modeler.prototype.addCustomElements = function(customElements) {
 
   if (!isArray(customElements)) {
     throw new Error('argument must be an array');
@@ -77,7 +76,7 @@ CustomModeler.prototype.addCustomElements = function(customElements) {
       connections = [];
 
   customElements.forEach(function(customElement) {
-    if (isCustomConnection(customElement)) {
+    if (isJSR352Connection(customElement)) {
       connections.push(customElement);
     } else {
       shapes.push(customElement);
@@ -96,14 +95,12 @@ CustomModeler.prototype.addCustomElements = function(customElements) {
  *
  * @return {Array<Object>} custom elements on the diagram
  */
-CustomModeler.prototype.getCustomElements = function() {
+JSR352Modeler.prototype.getCustomElements = function() {
   return this._customElements;
 };
 
-module.exports = CustomModeler;
+module.exports = JSR352Modeler;
 
-
-
-function isCustomConnection(element) {
+function isJSR352Connection(element) {
    return element.type === 'jsr352:Transition';
 }

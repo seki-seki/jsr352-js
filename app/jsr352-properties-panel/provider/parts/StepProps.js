@@ -1,9 +1,11 @@
 'use strict';
 
 var entryFactory = require('bpmn-js-properties-panel/lib/factory/EntryFactory'),
-    cmdHelper = require('bpmn-js-properties-panel/lib/helper/CmdHelper');
+    cmdHelper = require('bpmn-js-properties-panel/lib/helper/CmdHelper'),
+    multiSelectBox = require('../../factory/MultiSelectEntryFactory');
 
 var is = require('bpmn-js/lib/util/ModelUtil').is,
+    isAny = require('bpmn-js/lib/features/modeling/util/ModelingUtil').isAny,
     getBusinessObject = require('bpmn-js/lib/util/ModelUtil').getBusinessObject;
 
 function chunkChildEntry(element, bpmnFactory, id) {
@@ -35,8 +37,6 @@ function chunkChildEntry(element, bpmnFactory, id) {
 }
 
 module.exports = function(group, element, bpmnFactory) {
-
-
   if (is(element, 'jsr352:Step')) {
     group.entries.push(entryFactory.validationAwareTextField({
       id : 'start-limit',
@@ -69,34 +69,16 @@ module.exports = function(group, element, bpmnFactory) {
     }));
   }
 
-  if (is(element, 'jsr352:BatchletStep')) {
-    var entry = entryFactory.textBox({
-      id : 'batchlet',
+  if (isAny(element, ['jsr352:Batchlet', 'jsr352:Reader', 'jsr352:Writer', 'jsr352:Processor'])) {
+    group.entries.push(entryFactory.textBox({
+      id : 'ref',
       description : 'Specifies the name of a batch artifact.',
-      label : 'Batchlet',
-      modelProperty : 'batchlet',
-    });
+      label : 'Ref',
+      modelProperty : 'ref',
+    }));
+  }
 
-    entry.get = function() {
-      var batchlet = getBusinessObject(element).batchlet;
-      return {'batchlet': batchlet ? batchlet.ref : '' };
-    };
-
-    entry.set = function(element, values) {
-      if (values['batchlet']) {
-        var newProperties = {
-          batchlet: bpmnFactory.create('jsr352:Batchlet', {ref: values['batchlet']})
-        }
-        return cmdHelper.updateBusinessObject(element, getBusinessObject(element), newProperties);
-      }
-    };
-
-    group.entries.push(entry);
-  } else if (is(element, 'jsr352:ChunkStep')) {
-    group.entries.push(chunkChildEntry(element, bpmnFactory, 'reader'));
-    group.entries.push(chunkChildEntry(element, bpmnFactory, 'processor'));
-    group.entries.push(chunkChildEntry(element, bpmnFactory, 'writer'));
-
+  if (is(element, 'jsr352:Chunk')) {
     group.entries.push(entryFactory.selectBox({
       id: 'checkpoint-policy',
       description: 'Specifies the checkpoint policy that governs commit behavior for this chunk.',
@@ -114,13 +96,13 @@ module.exports = function(group, element, bpmnFactory) {
       label: 'Item count',
       modelProperty: 'item-count',
       getProperty: function(element) {
-        return getBusinessObject(element).chunk['item-count'];
+        return getBusinessObject(element)['item-count'];
       },
       setProperty: function(element, properties) {
-        var chunk = getBusinessObject(element).chunk
+        var bo = getBusinessObject(element);
         if (properties['item-count']) {
           properties['item-count'] = parseInt(properties['item-count']);
-          return cmdHelper.updateBusinessObject(chunk, getBusinessObject(chunk), properties);
+          return cmdHelper.updateBusinessObject(element, bo, properties);
         }
       },
       validate: function(element, values) {

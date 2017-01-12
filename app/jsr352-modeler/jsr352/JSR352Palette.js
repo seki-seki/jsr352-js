@@ -57,17 +57,27 @@ PaletteProvider.prototype.getPaletteEntries = function(element) {
   }
 
   assign(actions, {
-    'jsr352-chunk-step': createAction(
-      'jsr352:ChunkStep', 'custom', 'icon-jsr352-chunk-step'
-    ),
-    'jsr352-batchlet-step': createAction(
-      'jsr352:BatchletStep', 'custom', 'icon-jsr352-batchlet-step'
+    'jsr352-step': createAction(
+      'jsr352:Step', 'custom', 'icon-jsr352-step'
     ),
     'jsr352-flow': createAction(
       'jsr352:Flow', 'custom', 'icon-jsr352-flow'
     ),
     'jsr352-split': createAction(
       'jsr352:Split', 'custom', 'icon-jsr352-split'
+    ),
+    'batch-component-separator': {
+      group: 'custom',
+      separator: true
+    },
+    'jsr352-batchlet': createAction(
+      'jsr352:Batchlet', 'custom', 'icon-jsr352-batchlet'
+    ),
+    'jsr352-chunk': createAction(
+      'jsr352:Chunk', 'custom', 'icon-jsr352-chunk'
+    ),
+    'jsr352-listener': createAction(
+      'jsr352:Listener', 'custom', 'icon-jsr352-listener'
     ),
     'lasso-tool': {
       group: 'tools',
@@ -93,11 +103,17 @@ PaletteProvider.prototype.getPaletteEntries = function(element) {
       group: 'tools',
       separator: true
     },
-    'create.start-event': createAction(
-      'bpmn:StartEvent', 'event', 'bpmn-icon-start-event-none'
+    'create.start': createAction(
+      'jsr352:Start', 'event', 'bpmn-icon-start-event-none'
     ),
     'create.end-event': createAction(
-      'bpmn:EndEvent', 'event', 'bpmn-icon-end-event-none'
+      'jsr352:End', 'event', 'bpmn-icon-end-event-terminate'
+    ),
+    'create.fail-event': createAction(
+      'jsr352:Fail', 'event', 'bpmn-icon-end-event-error'
+    ),
+    'create.stop-event': createAction(
+      'jsr352:Stop', 'event', 'bpmn-icon-intermediate-event-none'
     ),
   });
 

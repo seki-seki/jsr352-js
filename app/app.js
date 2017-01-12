@@ -10,11 +10,11 @@ var initialDiagram =
                       'targetNamespace="http://bpmn.io/schema/bpmn" ' +
                       'id="Definitions_1">' +
       '<jsr352:Job id="Job_1" isExecutable="false">' +
-        '<bpmn:startEvent id="StartEvent_1"/>' +
+        '<jsr352:Start id="Start_1"/>' +
       '</jsr352:Job>' +
       '<bpmndi:BPMNDiagram id="BPMNDiagram_1">' +
         '<bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Job_1">' +
-          '<bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">' +
+          '<bpmndi:BPMNShape id="_BPMNShape_Start_2" bpmnElement="Start_1">' +
             '<dc:Bounds height="36.0" width="36.0" x="173.0" y="102.0"/>' +
           '</bpmndi:BPMNShape>' +
         '</bpmndi:BPMNPlane>' +
@@ -22,16 +22,16 @@ var initialDiagram =
     '</bpmn:definitions>';
 
 
-var CustomModeler = require('./custom-modeler');
+var JSR352Modeler = require('./jsr352-modeler');
 var $ = require('jquery');
 
 var propertiesPanelModule = require('bpmn-js-properties-panel'),
-    propertiesProviderModule = require('./custom-property'),
+    propertiesProviderModule = require('./jsr352-properties-panel/provider'),
     camundaModdleDescriptor = require('camunda-bpmn-moddle/resources/camunda'),
     jsr352ModdleDescriptor = require('./descriptors/jsr352');
 
 
-var modeler = new CustomModeler({
+var modeler = new JSR352Modeler({
   container: '#canvas',
   keyboard: { bindTo: document },
   propertiesPanel: {
