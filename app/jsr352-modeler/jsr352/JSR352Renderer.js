@@ -20,6 +20,22 @@ var LABEL_STYLE = {
   fontFamily: 'Arial, sans-serif',
   fontSize: '12px'
 };
+function getClassName(str) {
+    if(!str) {
+        return "";
+    }
+    var array = str.split(".");
+    return array[array.length - 1];
+}
+
+function minifyClassName(str){
+    if(!str) {
+        return "";
+    } else if(str.length < 5){
+        return str;
+    }
+    return str.substring(0,5) + "...";
+}
 
 /**
  * A renderer that knows how to render custom elements.
@@ -136,7 +152,23 @@ JSR352Renderer.prototype.drawShape = function(p, element) {
     return step;
   }
   else if (type === 'jsr352:Batchlet') {
-    return this.drawRect(p, element.width, element.height, 10, 0);
+    var batchlet = this.drawRect(p, element.width, element.height, 0, 0);
+    var batchletLabel = this.drawRect(p, 20, element.height, 0, 0, {
+      fill: '#000000'
+    });
+    this.renderLabel(p, "B",
+                     {
+                       box: {width: 20, height: 20, x: 0, y: 0},
+                       align: 'center-middle',
+                       padding: 1,
+                       style: {fill: '#ffffff'}});
+    this.renderLabel(p,getClassName(element.businessObject.ref),
+                     {
+                       box: {width: element.width - 20, height: element.height, x: 20, y: 0},
+                       align: 'center-middle',
+                       padding: {left:22},
+                       style: {fill: '#000000'}});
+    return batchlet;
   }
   else if (type === 'jsr352:Chunk') {
     return this.drawRect(p, element.width, element.height, 10, 0);
@@ -153,6 +185,12 @@ JSR352Renderer.prototype.drawShape = function(p, element) {
                        align: 'center-middle',
                        padding: 1,
                        style: {fill: '#ffffff'}});
+    this.renderLabel(p,minifyClassName(getClassName(element.businessObject.ref)),
+                     {
+                       box: {width: element.width - 20, height: element.height, x: 20, y: 0},
+                       align: 'center-middle',
+                       padding: {left:22},
+                       style: {fill: '#000000'}});
     return reader;
   }
   else if (type === 'jsr352:Processor') {
@@ -166,6 +204,12 @@ JSR352Renderer.prototype.drawShape = function(p, element) {
                        align: 'center-middle',
                        padding: 1,
                        style: {fill: '#ffffff'}});
+    this.renderLabel(p,minifyClassName(getClassName(element.businessObject.ref)),
+                     {
+                       box: {width: element.width - 20, height: element.height, x: 20, y: 0},
+                       align: 'center-middle',
+                       padding: {left:22},
+                       style: {fill: '#000000'}});
     return reader;
   }
   else if (type === 'jsr352:Writer') {
@@ -179,6 +223,12 @@ JSR352Renderer.prototype.drawShape = function(p, element) {
                        align: 'center-middle',
                        padding: 1,
                        style: {fill: '#ffffff'}});
+    this.renderLabel(p,minifyClassName(getClassName(element.businessObject.ref)),
+                     {
+                       box: {width: element.width - 20, height: element.height, x: 20, y: 0},
+                       align: 'center-middle',
+                       padding: {left:22},
+                       style: {fill: '#000000'}});
     return writer;
   }
   else if (type === 'jsr352:Listener') {
