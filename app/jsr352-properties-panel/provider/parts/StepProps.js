@@ -42,16 +42,16 @@ module.exports = function(group, element, bpmnFactory) {
       id : 'start-limit',
       description : 'Specifies the number of times this step may be started or restarted. It must be a valid XML integer value',
       label : 'Start Limit',
-      modelProperty : 'startLimit',
+      modelProperty : 'start-limit',
       getProperty: function(element) {
-        return getBusinessObject(element).startLimit;
+        return getBusinessObject(element)['start-limit'];
       },
       setProperty: function(element, properties) {
         return cmdHelper.updateProperties(element, properties);
       },
       validate: function(element, values) {
-        var isValid = /^[0-9]+$/.test(values.startLimit);
-        return isValid ? {} : {startLimit: 'Must be integer'};
+        var isValid = /^[0-9]+$/.test(values['start-limit']);
+        return isValid ? {} : {'start-limit': 'Must be integer'};
       }
     }));
 
@@ -59,9 +59,9 @@ module.exports = function(group, element, bpmnFactory) {
       id : 'allow-start-if-complete',
       description : 'Specifies whether this step is allowed to start during job restart, even if the step completed in a previous execution. ',
       label : 'Allow start if complete',
-      modelProperty : 'allowStartIfComplete',
+      modelProperty : 'allow-start-if-complete',
       getProperty: function(element) {
-        return getBusinessObject(element).allowStartIfComplete;
+        return getBusinessObject(element)['allow-start-if-complete'];
       },
       setProperty: function(element, properties) {
         return cmdHelper.updateProperties(element, properties);

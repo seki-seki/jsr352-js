@@ -28,18 +28,18 @@
       "superClass": ["jsr352:BatchComponent", "bpmn:SubProcess"],
       "properties": [
         {
-          "name": "startLimit",
+          "name": "start-limit",
           "isAttr": true,
           "type": "String",
           "default": "0"
         },
         {
-          "name": "allowIfComplete",
+          "name": "allow-start-if-complete",
           "isAttr": true,
           "type": "String"
         },
         {
-          "name": "listeners",
+          "name": "listener",
           "isAttr": false,
           "isMany": true,
           "type": "Listener"

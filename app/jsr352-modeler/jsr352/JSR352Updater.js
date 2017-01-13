@@ -17,7 +17,7 @@ var Collections = require('diagram-js/lib/util/Collections');
  * A handler responsible for updating the custom element's businessObject
  * once changes on the diagram happen.
  */
-function JSR352Updater(eventBus, bpmnjs, elementFactory) {
+function JSR352Updater(eventBus, bpmnjs, elementFactory, bpmnFactory) {
   function createChildShape(type, parent, offset) {
     if (!offset) {
       offset = {x: 0, y: 0};
@@ -137,7 +137,7 @@ inherits(JSR352Updater, CommandInterceptor);
 
 module.exports = JSR352Updater;
 
-JSR352Updater.$inject = [ 'eventBus', 'bpmnjs', 'elementFactory' ];
+JSR352Updater.$inject = [ 'eventBus', 'bpmnjs', 'elementFactory', 'bpmnFactory' ];
 
 
 /////// helpers ///////////////////////////////////
