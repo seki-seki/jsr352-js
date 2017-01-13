@@ -34,7 +34,7 @@ function minifyClassName(str){
     } else if(str.length < 5){
         return str;
     }
-    return str.substring(0,5) + "...";
+    return str.substring(0,4) + "...";
 }
 
 /**
