@@ -146,6 +146,13 @@ JSR352Renderer.prototype.drawShape = function(p, element) {
   var type = element.type;
   if (is(element, 'jsr352:Step')) {
     var step = this.drawRect(p, element.width, element.height, 10, 0);
+    this.drawRect(p, 40,20, 0, 0);
+    this.renderLabel(p, "Step",
+                     {
+                       box: {width: 40, height: 20, x: 0, y: 0},
+                       align: 'center-middle',
+                       padding: 1,
+                       style: {fill: '#000000'}});
     this.renderLabel(p, element.businessObject.name, { box: element, align: 'center-top', padding: 1});
     return step;
   }
@@ -243,12 +250,26 @@ JSR352Renderer.prototype.drawShape = function(p, element) {
     return listener;
   }
   else if (type === 'jsr352:Flow') {
-    var flow = this.drawRect(p, element.width, element.height, 10, 0);
+    var flow = this.drawShapeByType(p,element,'bpmn:Activity');
+    this.drawRect(p, 40,20, 0, 0);
+    this.renderLabel(p, "Flow",
+                     {
+                       box: {width: 40, height: 20, x: 0, y: 0},
+                       align: 'center-middle',
+                       padding: 1,
+                       style: {fill: '#000000'}});
     this.renderLabel(p, element.businessObject.name, { box: element, align: 'center-top', padding: 1});
     return flow;
   }
   else if (type === 'jsr352:Split') {
-    var split = this.drawRect(p, element.width, element.height, 10, 0);
+    var split = this.drawShapeByType(p,element,'bpmn:Lane');
+    this.drawRect(p, 40,20, 0, 0);
+    this.renderLabel(p, "Split",
+                     {
+                       box: {width: 40, height: 20, x: 0, y: 0},
+                       align: 'center-middle',
+                       padding: 1,
+                       style: {fill: '#000000'}});
     this.renderLabel(p, element.businessObject.name, { box: element, align: 'center-top', padding: 1});
     return split;
   }
