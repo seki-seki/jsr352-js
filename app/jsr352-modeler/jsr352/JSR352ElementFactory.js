@@ -94,7 +94,7 @@ JSR352ElementFactory.prototype._getCustomElementSize = function (type) {
   var shapes = {
     __default: { width: 100, height: 80 },
     'jsr352:Split': { width: 600, height: 400 },
-    'jsr352:Frow': { width: 400, height: 180 },
+    'jsr352:Flow': { width: 400, height: 240 },
     'jsr352:Step': { width: 120, height: 100 },
     'jsr352:Batchlet': { width: 100, height: 80 },
     'jsr352:Chunk': { width: 100, height: 80 },
