@@ -20,7 +20,7 @@ var LABEL_STYLE = {
   fontFamily: 'Arial, sans-serif',
   fontSize: '12px'
 };
-function getClassName(str) {
+function extractClassName(str) {
     if(!str) {
         return "";
     }
@@ -144,11 +144,9 @@ JSR352Renderer.prototype.canRender = function(element) {
 
 JSR352Renderer.prototype.drawShape = function(p, element) {
   var type = element.type;
-
   if (is(element, 'jsr352:Step')) {
     var step = this.drawRect(p, element.width, element.height, 10, 0);
-    this.renderLabel(p, element.businessObject.name, { box: element, align: 'center-middle', padding: 5 });
-    this.renderLabel(p, "Step", { box: element, align: 'center-top', padding: 5 });
+    this.renderLabel(p, element.businessObject.name, { box: element, align: 'center-top', padding: 1});
     return step;
   }
   else if (type === 'jsr352:Batchlet') {
@@ -162,7 +160,7 @@ JSR352Renderer.prototype.drawShape = function(p, element) {
                        align: 'center-middle',
                        padding: 1,
                        style: {fill: '#ffffff'}});
-    this.renderLabel(p,getClassName(element.businessObject.ref),
+    this.renderLabel(p,extractClassName(element.businessObject.ref),
                      {
                        box: {width: element.width - 20, height: element.height, x: 20, y: 0},
                        align: 'center-middle',
@@ -185,7 +183,7 @@ JSR352Renderer.prototype.drawShape = function(p, element) {
                        align: 'center-middle',
                        padding: 1,
                        style: {fill: '#ffffff'}});
-    this.renderLabel(p,minifyClassName(getClassName(element.businessObject.ref)),
+    this.renderLabel(p,minifyClassName(extractClassName(element.businessObject.ref)),
                      {
                        box: {width: element.width - 20, height: element.height, x: 20, y: 0},
                        align: 'center-middle',
@@ -204,7 +202,7 @@ JSR352Renderer.prototype.drawShape = function(p, element) {
                        align: 'center-middle',
                        padding: 1,
                        style: {fill: '#ffffff'}});
-    this.renderLabel(p,minifyClassName(getClassName(element.businessObject.ref)),
+    this.renderLabel(p,minifyClassName(extractClassName(element.businessObject.ref)),
                      {
                        box: {width: element.width - 20, height: element.height, x: 20, y: 0},
                        align: 'center-middle',
@@ -223,7 +221,7 @@ JSR352Renderer.prototype.drawShape = function(p, element) {
                        align: 'center-middle',
                        padding: 1,
                        style: {fill: '#ffffff'}});
-    this.renderLabel(p,minifyClassName(getClassName(element.businessObject.ref)),
+    this.renderLabel(p,minifyClassName(extractClassName(element.businessObject.ref)),
                      {
                        box: {width: element.width - 20, height: element.height, x: 20, y: 0},
                        align: 'center-middle',
@@ -245,10 +243,14 @@ JSR352Renderer.prototype.drawShape = function(p, element) {
     return listener;
   }
   else if (type === 'jsr352:Flow') {
-    return this.drawShapeByType(p, element, 'bpmn:SubProcess');
+    var flow = this.drawRect(p, element.width, element.height, 10, 0);
+    this.renderLabel(p, element.businessObject.name, { box: element, align: 'center-top', padding: 1});
+    return flow;
   }
   else if (type === 'jsr352:Split') {
-    return this.drawShapeByType(p, element, 'bpmn:Participant');
+    var split = this.drawRect(p, element.width, element.height, 10, 0);
+    this.renderLabel(p, element.businessObject.name, { box: element, align: 'center-top', padding: 1});
+    return split;
   }
   else if (type === 'jsr352:Start') {
     return this.drawShapeByType(p, element, 'bpmn:StartEvent');
