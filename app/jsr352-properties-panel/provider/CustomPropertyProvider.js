@@ -2,18 +2,15 @@
 
 
 var inherits = require('inherits');
-var is = require('bpmn-js/lib/util/ModelUtil').is,
-    isAny = require('bpmn-js/lib/features/modeling/util/ModelingUtil').isAny;
+var isAny = require('bpmn-js/lib/features/modeling/util/ModelingUtil').isAny;
 
 var PropertiesActivator = require('bpmn-js-properties-panel/lib/PropertiesActivator');
 
 // Require all properties you need from existing providers.
 // In this case all available bpmn relevant properties without camunda extensions.
-var processProps = require('bpmn-js-properties-panel/lib/provider/bpmn/parts/ProcessProps'),
-    eventProps = require('bpmn-js-properties-panel/lib/provider/bpmn/parts/EventProps'),
+var eventProps = require('bpmn-js-properties-panel/lib/provider/bpmn/parts/EventProps'),
     linkProps = require('bpmn-js-properties-panel/lib/provider/bpmn/parts/LinkProps'),
     documentationProps = require('bpmn-js-properties-panel/lib/provider/bpmn/parts/DocumentationProps'),
-    idProps = require('bpmn-js-properties-panel/lib/provider/bpmn/parts/IdProps'),
     properties = require('bpmn-js-properties-panel/lib/provider/camunda/parts/PropertiesProps'),
     nameProps = require('bpmn-js-properties-panel/lib/provider/bpmn/parts/NameProps');
 
@@ -21,6 +18,7 @@ var processProps = require('bpmn-js-properties-panel/lib/provider/bpmn/parts/Pro
 // Require your custom property entries.
 var stepProps = require('./parts/StepProps'),
     listenerProps = require('./parts/ListenerProps'),
+    restartbleProps = require('./parts/RestartableProps'),
     transitionProps = require('./parts/TransitionProps');
 
 // The general tab contains all bpmn relevant properties.
@@ -38,6 +36,7 @@ function createGeneralTabGroups(element, bpmnFactory, elementRegistry) {
   stepProps(generalGroup, element, bpmnFactory);
   listenerProps(generalGroup, element, bpmnFactory);
   transitionProps(generalGroup, element);
+  restartbleProps(generalGroup, element)
 
   var detailsGroup = {
     id: 'details',

@@ -28,4 +28,12 @@ module.exports = function(group, element) {
       }
     }));
   }
+  if (is(element, 'jsr352:Fail') || is(element, 'jsr352:End') || is(element, 'jsr352:Stop')) {
+    group.entries.push(entryFactory.textField({
+      id : 'exit-status',
+      description : 'Specifies the new exit status for the step. ',
+      label : 'exit-status',
+      modelProperty : 'exit-status'
+    }));
+  }
 };
